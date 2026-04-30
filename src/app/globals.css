@@ -2,15 +2,81 @@
 
 :root {
   color-scheme: light;
+
+  --background: 0 0% 100%;
+  --foreground: 217 33% 17%;
+  --graphite: 217 33% 17%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 217 33% 17%;
+
+  --primary: 163 84% 35%;
+  --primary-foreground: 0 0% 100%;
+
+  --muted: 210 40% 98%;
+  --muted-foreground: 215 16% 47%;
+
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 163 84% 35%;
+
+  --success: 163 84% 35%;
+  --success-soft: 152 57% 95%;
+  --warning: 38 92% 50%;
+  --warning-soft: 40 100% 95%;
+  --danger: 0 84% 60%;
+  --danger-soft: 0 100% 96%;
+  --info: 217 91% 60%;
+  --info-soft: 214 100% 96%;
+
+  --selection-bg: 163 84% 35%;
+  --selection-fg: 0 0% 100%;
+
+  --scrollbar-track: 210 40% 98%;
+  --scrollbar-thumb: 215 20% 75%;
+  --scrollbar-thumb-hover: 215 16% 58%;
 }
 
 * {
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--scrollbar-thumb)) hsl(var(--scrollbar-track));
+}
+
+*::selection {
+  background: hsl(var(--selection-bg));
+  color: hsl(var(--selection-fg));
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: hsl(var(--scrollbar-track));
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  border: 2px solid hsl(var(--scrollbar-track));
+  background: hsl(var(--scrollbar-thumb));
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--scrollbar-thumb-hover));
 }
 
 body {
   margin: 0;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #ffffff;
-  color: #1f2937;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
 }

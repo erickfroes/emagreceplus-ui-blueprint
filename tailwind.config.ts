@@ -22,6 +22,19 @@ const config: Config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        graphite: {
+          50: "#f8fafc",
+          100: "#f1f5f9",
+          200: "#e2e8f0",
+          300: "#cbd5e1",
+          400: "#94a3b8",
+          500: "#64748b",
+          600: "#475569",
+          700: "#334155",
+          800: "#1f2937",
+          900: "#0f172a",
+          DEFAULT: "hsl(var(--graphite))",
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -36,7 +49,7 @@ const config: Config = {
           200: "#aeeddc",
           300: "#76ddc3",
           400: "#39c6a3",
-          500: "#0EA37A",
+          500: "#0ea37a",
           600: "#078967",
           700: "#067056",
           800: "#075946",
@@ -45,20 +58,20 @@ const config: Config = {
           foreground: "hsl(var(--primary-foreground))",
         },
         success: {
-          DEFAULT: "#0EA37A",
-          soft: "#E8F8F2",
+          DEFAULT: "hsl(var(--success))",
+          soft: "hsl(var(--success-soft))",
         },
         warning: {
-          DEFAULT: "#F59E0B",
-          soft: "#FFF7E6",
+          DEFAULT: "hsl(var(--warning))",
+          soft: "hsl(var(--warning-soft))",
         },
         danger: {
-          DEFAULT: "#EF4444",
-          soft: "#FEECEC",
+          DEFAULT: "hsl(var(--danger))",
+          soft: "hsl(var(--danger-soft))",
         },
         info: {
-          DEFAULT: "#3B82F6",
-          soft: "#EAF2FF",
+          DEFAULT: "hsl(var(--info))",
+          soft: "hsl(var(--info-soft))",
         },
       },
       borderRadius: {
@@ -76,7 +89,10 @@ const config: Config = {
       },
       keyframes: {
         "fade-in": { from: { opacity: "0" }, to: { opacity: "1" } },
-        "slide-up": { from: { transform: "translateY(8px)", opacity: "0" }, to: { transform: "translateY(0)", opacity: "1" } },
+        "slide-up": {
+          from: { transform: "translateY(8px)", opacity: "0" },
+          to: { transform: "translateY(0)", opacity: "1" },
+        },
       },
       animation: {
         "fade-in": "fade-in .18s ease-out",
