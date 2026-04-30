@@ -1,16 +1,23 @@
-export function formatCurrency(value: number) {
-  return new Intl.NumberFormat("pt-BR", {
+export function formatCurrency(value: number, locale = "pt-BR", currency = "BRL") {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
-    currency: "BRL",
+    currency,
   }).format(value);
 }
 
-export function formatDate(value: string | Date) {
-  return new Intl.DateTimeFormat("pt-BR", {
+export function formatDate(value: string | Date, locale = "pt-BR") {
+  return new Intl.DateTimeFormat(locale, {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   }).format(new Date(value));
+}
+
+export function formatPercent(value: number, locale = "pt-BR") {
+  return new Intl.NumberFormat(locale, {
+    style: "percent",
+    maximumFractionDigits: 2,
+  }).format(value);
 }
 
 export function maskDocument(value: string) {
