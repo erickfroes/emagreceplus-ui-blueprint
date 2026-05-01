@@ -4,6 +4,13 @@ import { MobileAppShell } from "@/components/layout/MobileAppShell";
 import { ProgressRing } from "@/components/ui/ProgressRing";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import type { LucideIcon } from "lucide-react";
+
+type QuickAction = {
+  Icon: LucideIcon;
+  title: string;
+  desc: string;
+};
 
 type QuickActionItem = {
   icon: LucideIcon;
@@ -19,6 +26,13 @@ const quickActions: QuickActionItem[] = [
 ];
 
 export default function PatientMobileDashboardExample() {
+  const quickActions: QuickAction[] = [
+    { Icon: Droplets, title: "Água", desc: "Registrar" },
+    { Icon: Salad, title: "Refeições", desc: "Ver plano" },
+    { Icon: Dumbbell, title: "Treino", desc: "Iniciar" },
+    { Icon: CheckCircle2, title: "Check-in", desc: "Diário" },
+  ];
+
   return (
     <MobileAppShell active="Início">
       <div className="mb-6 flex items-center justify-between">
