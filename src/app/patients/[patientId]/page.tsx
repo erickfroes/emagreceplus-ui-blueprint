@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Tabs } from "@/components/ui/Tabs";
-import { patientDetails, type PatientDetail, type UIState } from "@/data/mock/patients";
+import type { PatientDetail, UIState } from "@/data/mock/patients";
+import { mockDataProvider } from "@/services/mock-data-provider";
 
 const tabItems = [
   { id: "resumo", label: "Resumo" },
@@ -65,14 +66,18 @@ function PatientPanels({ detail, tab }: { detail: PatientDetail; tab: string }) 
 export default function Patient360Page() {
   const [tab, setTab] = useState("resumo");
   const params = useParams<{ patientId: string }>();
-  const detail = patientDetails[params.patientId];
+  const [detail, setDetail] = useState<PatientDetail | null | undefined>(undefined);
+
+  useEffect(() => {
+    mockDataProvider.patients.getPatientDetail(params.patientId).then(setDetail);
+  }, [params.patientId]);
 
   return (
     <DashboardShell active="Pacientes">
       <h1 className="text-2xl font-semibold text-slate-950">Paciente 360</h1>
       <p className="mb-4 mt-1 text-sm text-muted-foreground">Visão centralizada do cuidado e evolução clínica.</p>
 
-      {pageState === "loading" ? <p className="text-sm text-muted-foreground">Carregando perfil do paciente...</p> : null}
+      {pageState === "loading" || detail === undefined ? <p className="text-sm text-muted-foreground">Carregando perfil do paciente...</p> : null}
       {pageState === "error" ? <p className="text-sm text-danger">Erro ao carregar dados do paciente.</p> : null}
       {pageState === "forbidden" ? <p className="text-sm text-danger">Você não tem permissão para acessar este perfil.</p> : null}
       {pageState === "empty" ? <EmptyState title="Sem dados clínicos" description="Nenhum dado de acompanhamento disponível." /> : null}
