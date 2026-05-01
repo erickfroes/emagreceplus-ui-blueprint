@@ -1,4 +1,6 @@
-export type UiState = "ready" | "loading" | "empty" | "error" | "forbidden";
+import type { UiState as BaseUiState, AuthContract, TenantUnitContract } from "@/contracts";
+
+export type UiState = "ready" | Exclude<BaseUiState, "default">;
 
 export type AuthProvider = {
   id: "google" | "microsoft" | "magic-link";
@@ -15,15 +17,17 @@ export type ClinicEnvironment = {
   status: "ativo" | "simulado" | "não configurado";
 };
 
-export type LoginScreenMock = {
-  state: UiState;
+export type LoginScreenMock = AuthContract & {
   title: string;
   subtitle: string;
   providers: AuthProvider[];
 };
 
 export const loginScreenMock: LoginScreenMock = {
-  state: "ready",
+  tela: "auth/login",
+  fonteFutura: "supabase_future",
+  status: "simulado",
+  state: "default",
   title: "Acesse o EmagrecePlus",
   subtitle: "Entre com seu e-mail corporativo ou escolha um provedor de login.",
   providers: [
@@ -33,10 +37,10 @@ export const loginScreenMock: LoginScreenMock = {
   ],
 };
 
-export const environmentSelectionMock: { state: UiState; items: ClinicEnvironment[] } = {
+export const environmentSelectionMock: { state: UiState; items: (ClinicEnvironment & TenantUnitContract)[] } = {
   state: "ready",
   items: [
-    { id: "env-1", clinicName: "Clínica Centro", role: "Nutricionista", location: "São Paulo - SP", status: "ativo" },
-    { id: "env-2", clinicName: "Unidade Jardins", role: "Coordenador(a)", location: "São Paulo - SP", status: "simulado" },
+    { id: "env-1", clinicName: "Clínica Centro", role: "Nutricionista", location: "São Paulo - SP", status: "ativo", tela: "auth/environment", fonteFutura: "supabase_future", nome: "Clínica Centro" },
+    { id: "env-2", clinicName: "Unidade Jardins", role: "Coordenador(a)", location: "São Paulo - SP", status: "simulado", tela: "auth/environment", fonteFutura: "supabase_future", nome: "Unidade Jardins" },
   ],
 };
