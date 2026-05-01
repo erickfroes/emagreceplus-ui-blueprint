@@ -1,23 +1,20 @@
-"use client";
-
 import Link from "next/link";
-import { useMemo, useState } from "react";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { ForbiddenState } from "@/components/ui/ForbiddenState";
+import { LoadingState } from "@/components/ui/LoadingState";
 import { crmLeads, crmStages, type CRMStage, type UIState } from "@/data/mock/crm";
+import { resolveUiState } from "@/data/mock/ui-states";
 
 type StageFilter = CRMStage | "todos";
-const pageState: UIState = "default";
-
-export default function CRMPage() {
-  const [stageFilter, setStageFilter] = useState<StageFilter>("todos");
-
-  const visibleLeads = useMemo(() => {
-    if (stageFilter === "todos") return crmLeads;
-    return crmLeads.filter((lead) => lead.stage === stageFilter);
-  }, [stageFilter]);
+export default async function CRMPage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
+  const params = searchParams ? await searchParams : undefined;
+  const pageState = resolveUiState(params?.state) as UIState;
+  const stageFilter: StageFilter = "todos";
+  const visibleLeads = crmLeads;
 
   return (
     <DashboardShell active="CRM">
@@ -32,7 +29,7 @@ export default function CRMPage() {
             aria-label="Filtrar etapa do CRM"
             className="rounded-xl border border-border bg-white px-3 py-2 text-sm ep-focus-ring"
             value={stageFilter}
-            onChange={(e) => setStageFilter(e.target.value as StageFilter)}
+            disabled
           >
             <option value="todos">Todos os estágios</option>
             {crmStages.map((stage) => (
@@ -42,9 +39,9 @@ export default function CRMPage() {
         </label>
       </div>
 
-      {pageState === "loading" ? <p className="text-sm text-muted-foreground">Carregando leads...</p> : null}
-      {pageState === "error" ? <p className="text-sm text-danger">Erro ao carregar o funil simulado.</p> : null}
-      {pageState === "forbidden" ? <p className="text-sm text-danger">Acesso negado ao CRM.</p> : null}
+      {pageState === "loading" ? <LoadingState title="Carregando leads" description="Buscando pipeline comercial simulado." /> : null}
+      {pageState === "error" ? <ErrorState title="Falha no funil" description="Não foi possível renderizar os estágios do CRM no mock atual." /> : null}
+      {pageState === "forbidden" ? <ForbiddenState title="Acesso negado ao CRM" description="Seu perfil não possui permissão para visualizar este funil." /> : null}
 
       {pageState === "empty" ? (
         <EmptyState title="CRM vazio" description="Ainda não existem leads no funil comercial." />

@@ -2,19 +2,23 @@ import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { ForbiddenState } from "@/components/ui/ForbiddenState";
+import { LoadingState } from "@/components/ui/LoadingState";
 import { queueColumns, type UIState } from "@/data/mock/encounters";
+import { resolveUiState } from "@/data/mock/ui-states";
 
-const pageState: UIState = "default";
-
-export default function QueuePage() {
+export default async function QueuePage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
+  const params = searchParams ? await searchParams : undefined;
+  const pageState = resolveUiState(params?.state) as UIState;
   return (
     <DashboardShell active="Atendimentos">
       <h1 className="text-2xl font-semibold text-slate-950">Fila de atendimento</h1>
       <p className="mb-6 mt-1 text-sm text-muted-foreground">Kanban operacional com ações por coluna para organizar o fluxo clínico.</p>
 
-      {pageState === "loading" ? <p className="text-sm text-muted-foreground">Carregando fila...</p> : null}
-      {pageState === "error" ? <p className="text-sm text-danger">Erro ao carregar fila de atendimento.</p> : null}
-      {pageState === "forbidden" ? <p className="text-sm text-danger">Você não tem acesso à fila de atendimento.</p> : null}
+      {pageState === "loading" ? <LoadingState title="Carregando fila" /> : null}
+      {pageState === "error" ? <ErrorState title="Erro ao carregar fila" /> : null}
+      {pageState === "forbidden" ? <ForbiddenState title="Acesso à fila restrito" /> : null}
       {pageState === "empty" ? <EmptyState title="Fila vazia" description="Nenhum paciente em fluxo no momento." /> : null}
 
       {pageState === "default" ? (
