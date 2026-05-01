@@ -5,8 +5,9 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { StatCard } from "@/components/ui/StatCard";
 import { inventoryItems, isExpired, resolveInventoryUiState } from "@/data/mock/inventory";
 
-export default function InventoryDashboardPage({ searchParams }: { searchParams?: { state?: string } }) {
-  const state = resolveInventoryUiState(searchParams?.state);
+export default async function InventoryDashboardPage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const state = resolveInventoryUiState(resolvedSearchParams?.state);
   const expired = inventoryItems.filter((i) => isExpired(i.validade)).length;
   const lowStock = inventoryItems.filter((i) => i.quantidade < i.estoqueMinimo).length;
 

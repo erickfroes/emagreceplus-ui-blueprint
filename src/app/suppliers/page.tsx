@@ -4,8 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { InventoryStateBlock } from "@/components/inventory/InventoryStateBlock";
 import { resolveInventoryUiState, suppliers } from "@/data/mock/inventory";
 
-export default function SuppliersPage({ searchParams }: { searchParams?: { state?: string } }) {
-  const state = resolveInventoryUiState(searchParams?.state);
+export default async function SuppliersPage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const state = resolveInventoryUiState(resolvedSearchParams?.state);
 
   return <DashboardShell active="Estoque">
     <h1 className="text-2xl font-semibold text-slate-950">Fornecedores</h1>

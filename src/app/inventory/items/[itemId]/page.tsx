@@ -5,8 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { StockMovementModalMock } from "@/components/inventory/StockMovementModalMock";
 import { inventoryItems, isExpired } from "@/data/mock/inventory";
 
-export default function InventoryItemDetailPage({ params }: { params: { itemId: string } }) {
-  const item = inventoryItems.find((i) => i.id === params.itemId);
+export default async function InventoryItemDetailPage({ params }: { params: Promise<{ itemId: string }> }) {
+  const { itemId } = await params;
+  const item = inventoryItems.find((i) => i.id === itemId);
   if (!item) return notFound();
   const expired = isExpired(item.validade);
 

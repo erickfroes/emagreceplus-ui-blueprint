@@ -4,8 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { InventoryStateBlock } from "@/components/inventory/InventoryStateBlock";
 import { purchaseOrders, resolveInventoryUiState, suppliers } from "@/data/mock/inventory";
 
-export default function PurchasesPage({ searchParams }: { searchParams?: { state?: string } }) {
-  const state = resolveInventoryUiState(searchParams?.state);
+export default async function PurchasesPage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const state = resolveInventoryUiState(resolvedSearchParams?.state);
   const supplierMap = new Map(suppliers.map((s) => [s.id, s.nome]));
 
   return <DashboardShell active="Estoque">

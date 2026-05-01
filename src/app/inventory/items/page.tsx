@@ -5,8 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { InventoryStateBlock } from "@/components/inventory/InventoryStateBlock";
 import { inventoryItems, isExpired, resolveInventoryUiState } from "@/data/mock/inventory";
 
-export default function InventoryItemsPage({ searchParams }: { searchParams?: { state?: string } }) {
-  const state = resolveInventoryUiState(searchParams?.state);
+export default async function InventoryItemsPage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const state = resolveInventoryUiState(resolvedSearchParams?.state);
 
   return <DashboardShell active="Estoque">
     <h1 className="text-2xl font-semibold text-slate-950">Itens do estoque</h1>
