@@ -16,7 +16,7 @@ const statusTone = {
 export default function DocumentsCenterPage() {
   return (
     <DashboardShell active="Dashboard">
-      <h1 className="text-2xl font-semibold text-slate-950">Centro Documental</h1>
+      <h1 className="text-2xl font-semibold text-graphite">Centro Documental</h1>
       <p className="mt-1 text-sm text-muted-foreground">Gestão de documentos, assinatura digital e evidências do provider D4Sign.</p>
 
       <Card className="mt-6">
@@ -24,7 +24,7 @@ export default function DocumentsCenterPage() {
           <CardTitle>Estado da tela</CardTitle>
         </CardHeader>
         <CardContent className="text-sm text-muted-foreground">
-          <p className="font-medium text-slate-900">{documentsUiScenarios[pageState].label}</p>
+          <p className="font-medium text-graphite">{documentsUiScenarios[pageState].label}</p>
           <p>{documentsUiScenarios[pageState].description}</p>
         </CardContent>
       </Card>
@@ -42,7 +42,7 @@ export default function DocumentsCenterPage() {
           <CardContent>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
-                <thead className="text-slate-500">
+                <thead className="text-muted-foreground">
                   <tr>
                     <th>Documento</th>
                     <th>Paciente</th>
@@ -55,7 +55,7 @@ export default function DocumentsCenterPage() {
                   {documentCenterItems.map((document) => (
                     <tr key={document.id} className="border-t border-border">
                       <td className="py-3">
-                        <Link href={`/documents/${document.id}`} className="font-medium text-slate-900 hover:underline">
+                        <Link href={`/documents/${document.id}`} className="font-medium text-graphite hover:underline">
                           {document.title}
                         </Link>
                         <p className="text-xs text-muted-foreground">Template: {document.templateName}</p>

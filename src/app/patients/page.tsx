@@ -15,7 +15,7 @@ const pageState: UIState = "default";
 export default function PatientsPage() {
   return (
     <DashboardShell active="Pacientes">
-      <h1 className="text-2xl font-semibold text-slate-950">Lista de pacientes</h1>
+      <h1 className="text-2xl font-semibold text-graphite">Lista de pacientes</h1>
       <p className="mb-6 mt-1 text-sm text-muted-foreground">Pacientes ativos e indicadores de acompanhamento nutricional.</p>
 
       {pageState === "loading" ? <p className="text-sm text-muted-foreground">Carregando pacientes...</p> : null}
@@ -28,11 +28,11 @@ export default function PatientsPage() {
           <CardContent>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
-                <thead className="text-slate-500"><tr><th>Paciente</th><th>Plano</th><th>Status</th><th>Adesão</th><th>Próxima consulta</th></tr></thead>
+                <thead className="text-muted-foreground"><tr><th>Paciente</th><th>Plano</th><th>Status</th><th>Adesão</th><th>Próxima consulta</th></tr></thead>
                 <tbody>
                   {patients.map((patient) => (
                     <tr key={patient.id} className="border-t border-border">
-                      <td className="py-3"><Link href={`/patients/${patient.id}`} className="font-medium text-slate-900 hover:underline">{patient.nome}</Link></td>
+                      <td className="py-3"><Link href={`/patients/${patient.id}`} className="font-medium text-graphite hover:underline">{patient.nome}</Link></td>
                       <td>{patient.plano}</td>
                       <td><Badge tone={statusTone[patient.status]}>{patient.status.replace("_", " ")}</Badge></td>
                       <td>{patient.adesaoPercentual}%</td>

@@ -15,10 +15,10 @@ export default function MobilePatientDashboardPage() {
     <MobileAppShell active="Início">
       <header className="mb-5 flex items-center justify-between">
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-500">Paciente</p>
+          <p className="text-xs uppercase tracking-wide text-muted-foreground">Paciente</p>
           <h1 className="text-2xl font-semibold">Olá, Juliana 👋</h1>
         </div>
-        <Bell className="h-5 w-5 text-slate-500" />
+        <Bell className="h-5 w-5 text-muted-foreground" />
       </header>
 
       <Card className="rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 p-5 text-white">
@@ -34,7 +34,7 @@ export default function MobilePatientDashboardPage() {
           <Card key={label} className="rounded-2xl p-4">
             <Icon className="h-5 w-5 text-emerald-700" />
             <p className="mt-2 text-sm font-semibold">{label}</p>
-            <p className="text-xs text-slate-500">{value}</p>
+            <p className="text-xs text-muted-foreground">{value}</p>
           </Card>
         ))}
       </section>
@@ -44,7 +44,7 @@ export default function MobilePatientDashboardPage() {
           <Calendar className="h-5 w-5 text-emerald-700" />
           <div>
             <p className="text-sm font-semibold">Próxima consulta</p>
-            <p className="text-xs text-slate-500">12 de maio de 2026 · 08:30</p>
+            <p className="text-xs text-muted-foreground">12 de maio de 2026 · 08:30</p>
           </div>
         </div>
       </Card>

@@ -12,11 +12,11 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variants: Record<ButtonVariant, string> = {
-  primary: "bg-primary-600 text-white shadow-soft hover:bg-primary-700",
-  secondary: "bg-primary-50 text-primary-700 hover:bg-primary-100",
-  outline: "border border-border bg-white text-slate-700 hover:bg-slate-50",
-  ghost: "bg-transparent text-slate-600 hover:bg-slate-100",
-  danger: "bg-danger text-white hover:bg-red-600",
+  primary: "bg-primary text-primary-foreground shadow-soft hover:brightness-95",
+  secondary: "bg-accent text-primary hover:bg-primary/15",
+  outline: "border border-border bg-white text-graphite hover:bg-accent",
+  ghost: "bg-transparent text-muted-foreground hover:bg-accent",
+  danger: "bg-danger text-white hover:brightness-95",
 };
 
 const sizes: Record<ButtonSize, string> = {
@@ -29,12 +29,7 @@ const sizes: Record<ButtonSize, string> = {
 export function Button({ className, variant = "primary", size = "md", loading, children, disabled, ...props }: ButtonProps) {
   return (
     <button
-      className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition disabled:pointer-events-none disabled:opacity-50 ep-focus-ring",
-        variants[variant],
-        sizes[size],
-        className,
-      )}
+      className={cn("inline-flex items-center justify-center gap-2 rounded-xl font-medium transition disabled:pointer-events-none disabled:opacity-50 ep-focus-ring", variants[variant], sizes[size], className)}
       disabled={disabled || loading}
       {...props}
     >

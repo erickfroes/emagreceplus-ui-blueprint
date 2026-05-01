@@ -17,9 +17,9 @@ interface SidebarProps {
 
 export function Sidebar({ brand, title, items, activeLabel, footer }: SidebarProps) {
   return (
-    <aside className="sticky top-0 h-screen border-r border-border bg-white p-6">
+    <aside className="sticky top-0 h-screen border-r border-border bg-white p-6 shadow-soft">
       {brand ? <div className="mb-8">{brand}</div> : null}
-      {title ? <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-slate-500">{title}</p> : null}
+      {title ? <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{title}</p> : null}
       <nav className="space-y-1">
         {items.map((item) => {
           const Icon = item.icon;
@@ -30,7 +30,7 @@ export function Sidebar({ brand, title, items, activeLabel, footer }: SidebarPro
               href={item.href}
               className={cn(
                 "flex items-center gap-3 rounded-xl px-3 py-3 text-sm transition",
-                isActive ? "bg-primary-50 text-primary-700" : "text-slate-600 hover:bg-slate-50",
+                isActive ? "bg-accent text-primary font-semibold" : "text-muted-foreground hover:bg-muted",
               )}
             >
               {Icon ? <Icon className="h-5 w-5" /> : null}

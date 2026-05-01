@@ -21,11 +21,11 @@ export function StatCard({ title, value, subtitle, trend, trendDirection = "neut
     <Card className={cn("p-5", className)}>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-medium text-slate-600">{title}</p>
-          <p className="mt-3 text-2xl font-semibold tracking-tight text-slate-950">{value}</p>
+          <p className="text-sm font-medium text-muted-foreground">{title}</p>
+          <p className="mt-3 text-2xl font-semibold tracking-tight text-graphite">{value}</p>
           {subtitle ? <p className="mt-1 text-xs text-muted-foreground">{subtitle}</p> : null}
         </div>
-        {icon ? <div className="grid h-12 w-12 place-items-center rounded-2xl bg-primary-50 text-primary-700">{icon}</div> : null}
+        {icon ? <div className="grid h-12 w-12 place-items-center rounded-2xl bg-accent text-primary">{icon}</div> : null}
       </div>
       {trend ? (
         <Badge tone={positive ? "success" : negative ? "danger" : "neutral"} className="mt-4">
