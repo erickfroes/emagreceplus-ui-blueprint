@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger";
@@ -7,6 +8,7 @@ type ButtonSize = "sm" | "md" | "lg" | "icon";
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  loading?: boolean;
 };
 
 const variants: Record<ButtonVariant, string> = {
@@ -24,7 +26,7 @@ const sizes: Record<ButtonSize, string> = {
   icon: "h-10 w-10 p-0",
 };
 
-export function Button({ className, variant = "primary", size = "md", ...props }: ButtonProps) {
+export function Button({ className, variant = "primary", size = "md", loading, children, disabled, ...props }: ButtonProps) {
   return (
     <button
       className={cn(
@@ -33,7 +35,11 @@ export function Button({ className, variant = "primary", size = "md", ...props }
         sizes[size],
         className,
       )}
+      disabled={disabled || loading}
       {...props}
-    />
+    >
+      {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+      {children}
+    </button>
   );
 }
