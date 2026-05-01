@@ -2,7 +2,8 @@ import { ArrowRight, HeartPulse, LayoutDashboard } from 'lucide-react';
 
 const modules = [
   { icon: LayoutDashboard, title: 'Dashboard Clínico', status: 'Em construção' },
-  { icon: HeartPulse, title: 'Jornada do Paciente', status: 'Mock pronto' }
+  { icon: HeartPulse, title: 'Jornada do Paciente', status: 'Mock pronto' },
+  { icon: LayoutDashboard, title: 'Preview de Telas', status: 'Navegável em /preview' }
 ] as const;
 
 export default function HomePage() {
@@ -23,10 +24,10 @@ export default function HomePage() {
               <Icon className="h-6 w-6 text-teal-600" />
               <h2 className="mt-4 text-xl font-semibold text-slate-900">{title}</h2>
               <p className="mt-2 text-sm text-slate-500">{status}</p>
-              <button className="mt-4 inline-flex items-center gap-2 rounded-xl bg-teal-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-teal-700">
-                Abrir módulo
+              <a href="/preview" className="mt-4 inline-flex items-center gap-2 rounded-xl bg-teal-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-teal-700">
+                Abrir preview
                 <ArrowRight className="h-4 w-4" />
-              </button>
+              </a>
             </article>
           ))}
         </div>

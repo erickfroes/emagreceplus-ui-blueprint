@@ -1,3 +1,4 @@
+import { isMockMode } from "@/lib/app-mode";
 export type D4SignMode = "unconfigured" | "simulated" | "real";
 
 export type D4SignConfig = {
@@ -23,6 +24,19 @@ export type SignatureDispatchResult =
   | { ok: false; code: "provider_config_missing" | "not_implemented" | "provider_error"; message: string };
 
 export function getD4SignConfigFromEnv(): D4SignConfig {
+  if (isMockMode) {
+    return {
+      mode: "simulated",
+      env: "sandbox",
+      baseUrl: undefined,
+      tokenApi: undefined,
+      cryptKey: undefined,
+      safeUuid: undefined,
+      webhookSecret: undefined,
+      hmacStrategy: "uuid",
+    };
+  }
+
   return {
     mode: (process.env.DOCUMENT_SIGNATURE_PROVIDER_MODE as D4SignMode) ?? "unconfigured",
     env: (process.env.D4SIGN_ENV as "sandbox" | "production") ?? "sandbox",

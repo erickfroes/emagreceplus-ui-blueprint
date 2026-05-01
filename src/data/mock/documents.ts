@@ -1,4 +1,4 @@
-import type { D4SignMode } from "@/server/integrations/d4sign/provider";
+type D4SignMode = "unconfigured" | "simulated" | "real";
 
 export type DocumentsUiState = "default" | "loading" | "empty" | "error" | "forbidden";
 

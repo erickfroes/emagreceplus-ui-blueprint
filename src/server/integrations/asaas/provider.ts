@@ -1,3 +1,4 @@
+import { isMockMode } from "@/lib/app-mode";
 export type AsaasConfig = {
   env: "sandbox" | "production";
   baseUrl: string;
@@ -17,6 +18,15 @@ export type CreateChargeInput = {
 };
 
 export function getAsaasConfigFromEnv(): AsaasConfig {
+  if (isMockMode) {
+    return {
+      env: "sandbox",
+      baseUrl: "https://api-sandbox.asaas.com/v3",
+      apiKey: undefined,
+      webhookToken: undefined,
+    };
+  }
+
   return {
     env: (process.env.ASAAS_ENV as "sandbox" | "production") ?? "sandbox",
     baseUrl: process.env.ASAAS_BASE_URL ?? "https://api-sandbox.asaas.com/v3",
