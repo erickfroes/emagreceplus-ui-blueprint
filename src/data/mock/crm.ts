@@ -1,6 +1,8 @@
+import type { UiState as UIState, CRMLeadContract } from "@/contracts";
+
 export type CRMStage = "novo" | "qualificado" | "consulta_agendada" | "proposta_enviada" | "perdido" | "arquivado";
 
-export type CRMLead = {
+export type CRMLead = CRMLeadContract & {
   id: string;
   nome: string;
   objetivo: string;
@@ -18,7 +20,7 @@ export type CRMStageColumn = {
   label: string;
 };
 
-export type UIState = "default" | "loading" | "empty" | "error" | "forbidden";
+export type { UIState };
 
 export const crmStages: CRMStageColumn[] = [
   { id: "novo", label: "Novo" },
@@ -32,6 +34,8 @@ export const crmStages: CRMStageColumn[] = [
 export const crmLeads: CRMLead[] = [
   {
     id: "lead_001",
+    tela: "crm/leads",
+    fonteFutura: "supabase_future",
     nome: "Marina Gomes",
     objetivo: "Emagrecimento pós-parto",
     origem: "Instagram",
@@ -44,6 +48,8 @@ export const crmLeads: CRMLead[] = [
   },
   {
     id: "lead_002",
+    tela: "crm/leads",
+    fonteFutura: "supabase_future",
     nome: "André Barros",
     objetivo: "Controle glicêmico",
     origem: "Google",
@@ -56,6 +62,8 @@ export const crmLeads: CRMLead[] = [
   },
   {
     id: "lead_003",
+    tela: "crm/leads",
+    fonteFutura: "supabase_future",
     nome: "Livia Prado",
     objetivo: "Reeducação alimentar",
     origem: "Indicação",
@@ -68,6 +76,8 @@ export const crmLeads: CRMLead[] = [
   },
   {
     id: "lead_004",
+    tela: "crm/leads",
+    fonteFutura: "supabase_future",
     nome: "Rafael Dias",
     objetivo: "Hipertrofia com redução de gordura",
     origem: "Site",
@@ -80,6 +90,8 @@ export const crmLeads: CRMLead[] = [
   },
   {
     id: "lead_005",
+    tela: "crm/leads",
+    fonteFutura: "supabase_future",
     nome: "Camila Nunes",
     objetivo: "Perda de peso",
     origem: "Instagram",
