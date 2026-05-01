@@ -7,7 +7,7 @@ import { documentCenterItems, documentsUiScenarios, type DocumentsUiState } from
 const pageState: DocumentsUiState = "default";
 
 const statusTone = {
-  rascunho: "default",
+  rascunho: "neutral",
   assinatura_pendente: "warning",
   assinado: "success",
   expirado: "danger",
