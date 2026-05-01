@@ -2,7 +2,8 @@ import Link from "next/link";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { patients, type UIState } from "@/data/mock/patients";
+import type { UIState } from "@/data/mock/patients";
+import { mockDataProvider } from "@/services/mock-data-provider";
 
 const statusTone = {
   em_tratamento: "info",
@@ -12,7 +13,8 @@ const statusTone = {
 
 const pageState: UIState = "default";
 
-export default function PatientsPage() {
+export default async function PatientsPage() {
+  const { items: patients } = await mockDataProvider.patients.listPatients();
   return (
     <DashboardShell active="Pacientes">
       <h1 className="text-2xl font-semibold text-graphite">Lista de pacientes</h1>
