@@ -4,13 +4,6 @@ import { MobileAppShell } from "@/components/layout/MobileAppShell";
 import { ProgressRing } from "@/components/ui/ProgressRing";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import type { LucideIcon } from "lucide-react";
-
-type QuickAction = {
-  Icon: LucideIcon;
-  title: string;
-  desc: string;
-};
 
 type QuickActionItem = {
   icon: LucideIcon;
@@ -18,19 +11,13 @@ type QuickActionItem = {
   description: string;
 };
 
-const quickActions: QuickActionItem[] = [
-  { icon: Droplets, title: "Água", description: "Registrar" },
-  { icon: Salad, title: "Refeições", description: "Ver plano" },
-  { icon: Dumbbell, title: "Treino", description: "Iniciar" },
-  { icon: CheckCircle2, title: "Check-in", description: "Diário" },
-];
 
 export default function PatientMobileDashboardExample() {
-  const quickActions: QuickAction[] = [
-    { Icon: Droplets, title: "Água", desc: "Registrar" },
-    { Icon: Salad, title: "Refeições", desc: "Ver plano" },
-    { Icon: Dumbbell, title: "Treino", desc: "Iniciar" },
-    { Icon: CheckCircle2, title: "Check-in", desc: "Diário" },
+  const quickActions: QuickActionItem[] = [
+    { icon: Droplets, title: "Água", description: "Registrar" },
+    { icon: Salad, title: "Refeições", description: "Ver plano" },
+    { icon: Dumbbell, title: "Treino", description: "Iniciar" },
+    { icon: CheckCircle2, title: "Check-in", description: "Diário" },
   ];
 
   return (
