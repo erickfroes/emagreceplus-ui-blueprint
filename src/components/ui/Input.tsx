@@ -10,10 +10,10 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 export function Input({ label, hint, error, className, ...props }: InputProps) {
   return (
     <label className="block space-y-2">
-      {label ? <span className="text-sm font-medium text-slate-700">{label}</span> : null}
+      {label ? <span className="text-sm font-medium text-graphite">{label}</span> : null}
       <input
         className={cn(
-          "h-11 w-full rounded-xl border border-input bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 ep-focus-ring",
+          "h-11 w-full rounded-xl border border-input bg-white px-3 text-sm text-graphite placeholder:text-muted-foreground ep-focus-ring",
           error && "border-danger focus-visible:ring-danger",
           className,
         )}

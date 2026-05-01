@@ -29,7 +29,7 @@ export function Tabs({ items, value, onChange, className }: TabsProps) {
             onClick={() => onChange(item.id)}
             className={cn(
               "rounded-xl px-3 py-2 text-sm font-medium transition ep-focus-ring disabled:cursor-not-allowed disabled:opacity-50",
-              active ? "bg-primary-600 text-white" : "text-slate-600 hover:bg-slate-100",
+              active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent",
             )}
           >
             {item.label}

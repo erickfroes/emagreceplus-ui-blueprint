@@ -23,14 +23,14 @@ export default function CRMPage() {
     <DashboardShell active="CRM">
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-950">CRM Kanban</h1>
+          <h1 className="text-2xl font-semibold text-graphite">CRM Kanban</h1>
           <p className="mt-1 text-sm text-muted-foreground">Pipeline visual com estágios de conversão, perdido e arquivado.</p>
         </div>
         <label className="flex items-center gap-2 text-sm text-slate-600">
           Filtrar etapa
           <select
             aria-label="Filtrar etapa do CRM"
-            className="rounded-xl border border-border bg-white px-3 py-2 text-sm"
+            className="rounded-xl border border-border bg-white px-3 py-2 text-sm ep-focus-ring"
             value={stageFilter}
             onChange={(e) => setStageFilter(e.target.value as StageFilter)}
           >
@@ -70,11 +70,11 @@ export default function CRMPage() {
                       <Link
                         key={lead.id}
                         href={`/crm/leads/${lead.id}`}
-                        className="block rounded-xl border border-border p-3 hover:bg-slate-50"
+                        className="block rounded-xl border border-border p-3 hover:bg-accent"
                       >
-                        <p className="font-medium text-slate-900">{lead.nome}</p>
+                        <p className="font-medium text-graphite">{lead.nome}</p>
                         <p className="text-sm text-muted-foreground">{lead.objetivo}</p>
-                        <div className="mt-2 flex items-center justify-between text-xs text-slate-500">
+                        <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
                           <span>{lead.origem}</span>
                           <span>{lead.ultimaInteracaoEm}</span>
                         </div>

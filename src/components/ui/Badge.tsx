@@ -8,8 +8,8 @@ const tones: Record<BadgeTone, string> = {
   warning: "bg-warning-soft text-amber-700",
   danger: "bg-danger-soft text-danger",
   info: "bg-info-soft text-info",
-  neutral: "bg-slate-100 text-slate-600",
-  primary: "bg-primary-50 text-primary-700",
+  neutral: "bg-muted text-muted-foreground",
+  primary: "bg-accent text-primary",
 };
 
 export function Badge({ tone = "neutral", className, ...props }: React.HTMLAttributes<HTMLSpanElement> & { tone?: BadgeTone }) {
