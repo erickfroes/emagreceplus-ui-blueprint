@@ -17,11 +17,13 @@
     "recharts": "^3.1.2"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.4",
     "@types/node": "^22.15.14",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "eslint": "^9.26.0",
     "eslint-config-next": "15.3.1",
+    "postcss": "^8.5.13",
     "tailwindcss": "^4.1.5",
     "typescript": "^5.8.3"
   }
