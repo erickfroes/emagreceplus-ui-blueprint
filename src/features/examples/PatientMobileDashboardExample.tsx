@@ -1,8 +1,22 @@
 import { Bell, Calendar, CheckCircle2, Droplets, Dumbbell, Salad } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { MobileAppShell } from "@/components/layout/MobileAppShell";
 import { ProgressRing } from "@/components/ui/ProgressRing";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+
+type QuickActionItem = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+};
+
+const quickActions: QuickActionItem[] = [
+  { icon: Droplets, title: "Água", description: "Registrar" },
+  { icon: Salad, title: "Refeições", description: "Ver plano" },
+  { icon: Dumbbell, title: "Treino", description: "Iniciar" },
+  { icon: CheckCircle2, title: "Check-in", description: "Diário" },
+];
 
 export default function PatientMobileDashboardExample() {
   return (
@@ -20,16 +34,11 @@ export default function PatientMobileDashboardExample() {
       </div>
       <ProgressRing value={33} label="4 de 12" sublabel="Semana" />
       <div className="mt-6 grid grid-cols-4 gap-3">
-        {[
-          [Droplets, "Água", "Registrar"],
-          [Salad, "Refeições", "Ver plano"],
-          [Dumbbell, "Treino", "Iniciar"],
-          [CheckCircle2, "Check-in", "Diário"],
-        ].map(([Icon, title, desc]: any) => (
+        {quickActions.map(({ icon: Icon, title, description }) => (
           <Card key={title} className="p-4 text-center">
             <Icon className="mx-auto h-7 w-7 text-primary-700" />
             <p className="mt-3 text-sm font-semibold">{title}</p>
-            <p className="text-xs text-muted-foreground">{desc}</p>
+            <p className="text-xs text-muted-foreground">{description}</p>
           </Card>
         ))}
       </div>
