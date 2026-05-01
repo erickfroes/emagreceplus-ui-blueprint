@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -61,8 +62,9 @@ function PatientPanels({ detail, tab }: { detail: PatientDetail; tab: string }) 
   );
 }
 
-export default function Patient360Page({ params }: { params: { patientId: string } }) {
+export default function Patient360Page() {
   const [tab, setTab] = useState("resumo");
+  const params = useParams<{ patientId: string }>();
   const detail = patientDetails[params.patientId];
 
   return (
