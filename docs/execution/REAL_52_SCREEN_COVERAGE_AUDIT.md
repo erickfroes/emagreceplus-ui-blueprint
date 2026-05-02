@@ -41,7 +41,7 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 27 | Editor Documento | `/settings/documents/editor` | sim | editor page (toolbox/canvas/propriedades) | sim (estado UI-only local) | sim (`documents`) | sim | Expandir interações drag/drop no canvas | A |
 | 28 | D4Sign Settings | `/settings/signature` | sim | d4sign settings page (cards/checklist/banner) | sim (status simulado) | sim (`integrations/documents`) | sim | Conectar adapters futuros sem provider real | A |
 | 29 | Billing SaaS | `/settings/billing` | parcial | billing settings page | sim (`finance`) | sim (`finance`) | parcial | Completar plan/usage/invoice states | M |
-| 30 | Analytics | `/reports/executive` (aprox.) | parcial | report views | sim (`reports`) | sim (`reports`) | parcial via ReportStateSection | Falta tela analytics dedicada do mapa | M |
+| 30 | Analytics | `/reports/executive` | completa | executive analytics page + alerts table | sim (`reports`) | sim (`reports`) | sim (ReportStateSection + default completo) | Consolidado no hub executivo com alertas estratégicos | A |
 | 31 | Financeiro | `/finance` | sim | finance dashboard page | sim (`finance`) | sim (`finance`) | parcial | Expandir estados em toda a página | M |
 | 32 | Contas Receber | `/finance/receivables` | sim | receivables page | sim (`finance`) | sim (`finance`) | sim (via `UiStateView`) | Aprofundar ações de cobrança | B |
 | 33 | Pagamento Modal | `/finance` + `/finance/receivables` | sim | `PaymentRegistrationModal` reutilizável + `ConfirmDialog` | sim (`finance`) | sim (`finance`) | sim (validação visual + confirmação) | Concluído em UI-only com auditoria simulada | A |
@@ -59,15 +59,15 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 45 | Entrada Estoque | modal em `/inventory/items` e `/inventory/items/[itemId]` | completa | `StockEntryModal` + `ConfirmDialog` | sim (`inventory`) | sim (`inventory`) | sim | Concluída com campos completos, toggle de novo lote, upload visual de nota e aviso de auditoria | A |
 | 46 | Saída Estoque | modal em `/inventory/items` e `/inventory/items/[itemId]` | completa | `StockOutputModal` + `ConfirmDialog` | sim (`inventory`) | sim (`inventory`) | sim | Concluída com motivos padronizados, vínculo opcional com atendimento/paciente e bloqueio visual por saldo | A |
 | 47 | Compras | `/purchases` | parcial | purchases page | sim (`inventory`) | sim (`inventory`) | parcial | Tabs/painel fornecedor mais completos | M |
-| 48 | Relatórios Financeiros | `/reports/finance` | sim | report page + toolbar | sim (`reports`) | sim (`reports`) | parcial (state section) | Consolidar tabela por unidade | B |
-| 49 | Relatórios Pacotes | `/reports/packages` | sim | report page + charts | sim (`reports/packages`) | sim (`reports/packages`) | parcial (state section) | Ajustes de funil/performance | B |
-| 50 | Relatórios Estoque | `/reports/inventory` | sim | report page + charts | sim (`reports/inventory`) | sim (`reports/inventory`) | parcial (state section) | Completar KPIs de consumo | B |
-| 51 | Visão Executiva | `/reports/executive` | sim | executive report page | sim (`reports`) | sim (`reports`) | parcial (state section) | Consolidar alertas estratégicos tabela | B |
+| 48 | Relatórios Financeiros | `/reports/finance` | completa | report page + toolbar + tabela por unidade | sim (`reports`) | sim (`reports`) | sim (LEEF + permissão financeira visual) | Concluída com visão por unidade e exportação visual desabilitada | A |
+| 49 | Relatórios Pacotes | `/reports/packages` | completa | report page + funil + performance | sim (`reports/packages`) | sim (`reports/packages`) | sim (ReportStateSection + default completo) | Funil e performance de pacotes refinados | A |
+| 50 | Relatórios Estoque | `/reports/inventory` | completa | report page + KPIs de consumo + críticos | sim (`reports/inventory`) | sim (`reports/inventory`) | sim (ReportStateSection + default completo) | KPIs de consumo e cobertura finalizados | A |
+| 51 | Visão Executiva | `/reports/executive` | completa | analytics executivo + tabela de alertas | sim (`reports`) | sim (`reports`) | sim (ReportStateSection + default completo) | Alertas estratégicos consolidados | A |
 | 52 | Relatório Paciente | `/patients/[patientId]/report` | completa | header + tabs + KPIs + tabelas + alertas | sim (`patient-report`) | sim (`patient-report`) | sim | Concluída com visão financeira, serviços, documentos e adesão | A |
 
 ## Totais
-- ✅ **completas**: 28
-- 🟡 **parciais**: 21
+- ✅ **completas**: 33
+- 🟡 **parciais**: 16
 - 🔴 **faltantes**: 2
 
 ## Top 10 pendências de maior impacto
