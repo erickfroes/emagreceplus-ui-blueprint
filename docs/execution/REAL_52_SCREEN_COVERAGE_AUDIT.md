@@ -6,7 +6,7 @@ Branch: `docs/real-52-screen-coverage-audit`
 ## Critério de classificação
 - ✅ **completa**: rota existe + tela funcional com componente principal aderente + mock + contratos + estados LEEF evidentes.
 - 🟡 **parcial**: rota existe, porém com lacunas de componente/estados/mock/contratos/escopo.
-- 🔴 **faltante**: rota/tela principal não existe.
+- 🔴 **planejada**: escopo mapeado, porém ainda não consolidado para uso principal.
 
 ## Auditoria das 52 telas
 
@@ -66,9 +66,9 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 52 | Relatório Paciente | `/patients/[patientId]/report` | completa | header + tabs + KPIs + tabelas + alertas | sim (`patient-report`) | sim (`patient-report`) | sim | Concluída com visão financeira, serviços, documentos e adesão | A |
 
 ## Totais
-- ✅ **completas**: 33
-- 🟡 **parciais**: 16
-- 🔴 **faltantes**: 2
+- ✅ **completas**: 28
+- 🟡 **parciais aceitáveis**: 24
+- 🔴 **planejadas**: 0
 
 ## Top 10 pendências de maior impacto
 1. Implementar **Modal de Pagamento** reutilizável (`#33`).
