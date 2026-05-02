@@ -1,13 +1,6 @@
 import type { NotificationListDto } from "@/contracts/notifications";
 
-export type NotificationSeverity = "low" | "medium" | "high";
-export type NotificationCategory = "documentos" | "agenda" | "chat" | "sistema";
-
-export type NotificationFeedItem = NotificationListDto["items"][number] & {
-  severity: NotificationSeverity;
-  category: NotificationCategory;
-  actionLabel: string;
-};
+export type NotificationFeedItem = NotificationListDto["items"][number];
 
 export interface NotificationFeedMock {
   default: NotificationFeedItem[];
@@ -26,9 +19,9 @@ export const notificationsMock: NotificationFeedMock = {
       status: "unread",
       channel: "in_app",
       createdAt: "2026-05-02T09:10:00Z",
-      severity: "high",
+      severity: "critical",
       category: "documentos",
-      actionLabel: "Revisar documento",
+      cta: { label: "Ver documento", href: "/documents" },
     },
     {
       id: "n-1002",
@@ -37,9 +30,9 @@ export const notificationsMock: NotificationFeedMock = {
       status: "unread",
       channel: "in_app",
       createdAt: "2026-05-02T08:42:00Z",
-      severity: "medium",
+      severity: "warning",
       category: "chat",
-      actionLabel: "Abrir conversa",
+      cta: { label: "Abrir chat", href: "/chat" },
     },
     {
       id: "n-1003",
@@ -48,9 +41,20 @@ export const notificationsMock: NotificationFeedMock = {
       status: "read",
       channel: "email_simulated",
       createdAt: "2026-05-02T07:58:00Z",
-      severity: "low",
+      severity: "info",
       category: "agenda",
-      actionLabel: "Ver agenda",
+      cta: { label: "Abrir agenda", href: "/schedule" },
+    },
+    {
+      id: "n-1004",
+      title: "Falha de sincronização de anexos simulados",
+      body: "Revise o lote de anexos do dia para evitar atraso na assinatura.",
+      status: "unread",
+      channel: "in_app",
+      createdAt: "2026-05-02T06:40:00Z",
+      severity: "critical",
+      category: "sistema",
+      cta: { label: "Investigar", href: "/documents/ops/health" },
     },
   ],
   loading: [],
