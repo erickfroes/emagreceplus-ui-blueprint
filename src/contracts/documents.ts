@@ -32,3 +32,25 @@ export interface DocumentDetailDto {
 
 export type DocumentAction = "create" | "send_for_signature" | "void" | "download";
 export type DocumentModal = "new_document" | "signature_status" | "confirm_void";
+
+export type DocumentTemplateBlockType = "header" | "patient_data" | "free_text" | "table" | "signature" | "footer";
+
+export interface DocumentTemplateVariable {
+  key: "patient.name" | "patient.cpf" | "professional.name" | "clinic.name" | "document.date";
+  label: string;
+  sourceStatus: "configured" | "missing";
+}
+
+export interface DocumentEditorTemplate {
+  id: string;
+  title: string;
+  status: "draft" | "published";
+  versionLabel: string;
+  blocks: DocumentTemplateBlockType[];
+  variables: DocumentTemplateVariable[];
+}
+
+export interface DocumentEditorDto {
+  state: UiState;
+  template: DocumentEditorTemplate | null;
+}
