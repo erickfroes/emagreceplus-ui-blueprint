@@ -23,8 +23,8 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 9 | Fila | `/queue` | sim | fila em `page.tsx` | sim (`scheduling`) | sim (`scheduling`) | sim | KPIs de espera dedicados | B |
 | 10 | SOAP | `/encounters/[encounterId]` | completa | `SoapEditor` + `EncounterContextPanel` + `EncounterActionBar` | sim (`encounters/clinical`) | sim (`clinical`) | sim | Concluída com header de paciente, abas SOAP, painel clínico e barra fixa | A |
 | 11 | Anamnese | `/encounters/[encounterId]/anamnesis` | completa | stepper + resumo em tempo real + sinais de atenção | sim (`encounters/clinical`) | sim (`clinical`) | sim | Concluída com 7 seções, botões de navegação e tooltip para siglas | A |
-| 12 | Plano Alimentar | `/nutrition/plans/[patientId]` | parcial | plan view | sim (`nutrition`) | sim (`nutrition`) | sim | Builder completo (MealCard/MacroChart) | A |
-| 13 | Prescrições | `/prescriptions/[prescriptionId]` | parcial | prescription view | sim (`prescriptions`) | sim (`prescriptions`) | sim | Histórico/preview avançado | A |
+| 12 | Plano Alimentar | `/nutrition/plans/[patientId]` | completa | `MealCard` + `MacroSummary` + `FoodGroupChip` + `NutritionPlanPreview` | sim (`nutrition`) | sim (`nutrition`) | sim | Concluída com metas por refeição, histórico/modelos e envio simulado | A |
+| 13 | Prescrições | `/prescriptions/[prescriptionId]` | completa | tabs + preview documental + histórico | sim (`prescriptions`) | sim (`prescriptions`) | sim | Concluída com tabs por tipo, status e ações simuladas | A |
 | 14 | Centro Documental | `/documents` | sim | documents list view | sim (`documents`) | sim (`documents`) | sim | Consolidar filtros/KPIs dedicados | M |
 | 15 | Detalhe Documento | `/documents/[documentId]` | sim | document detail view | sim (`documents`) | sim (`documents`) | sim | Expandir audit timeline visual | M |
 | 16 | Dossiê de evidência | `/documents/[documentId]/evidence` | sim | evidence view | sim (`documents`) | sim (`documents`) | sim | Concluído em UI-only com hash/eventos/timeline simulados | A |
@@ -66,8 +66,8 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 52 | Relatório Paciente | `/patients/[patientId]/report` | parcial | `ReportStateSection` + cards | sim (`reports/patients`) | sim (`reports/patients`) | parcial | Header/tabs/uso serviços/pagamentos completo | A |
 
 ## Totais
-- ✅ **completas**: 21
-- 🟡 **parciais**: 28
+- ✅ **completas**: 23
+- 🟡 **parciais**: 26
 - 🔴 **faltantes**: 2
 
 ## Top 10 pendências de maior impacto

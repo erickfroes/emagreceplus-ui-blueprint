@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { DashboardShell } from "@/components/layout/DashboardShell";
+import { MealCard } from "@/components/nutrition/MealCard";
+import { MacroSummary } from "@/components/nutrition/MacroSummary";
+import { NutritionPlanPreview } from "@/components/nutrition/NutritionPlanPreview";
+import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { DocumentPreviewCard } from "@/components/nutrition/DocumentPreviewCard";
 import { getStateFromParam, nutritionPlans } from "@/data/mock/nutrition";
 
 export default function NutritionPlanPage() {
@@ -17,7 +20,7 @@ export default function NutritionPlanPage() {
   return (
     <DashboardShell active="Pacientes">
       <h1 className="text-2xl font-semibold text-slate-950">Plano alimentar</h1>
-      <p className="mb-4 mt-1 text-sm text-muted-foreground">Plano nutricional estruturado por refeição e objetivo clínico.</p>
+      <p className="mb-4 mt-1 text-sm text-muted-foreground">Plano nutricional visual com metas por refeição, histórico de modelos e envio simulado.</p>
 
       {state === "loading" ? <p className="text-sm text-muted-foreground">Carregando plano alimentar...</p> : null}
       {state === "error" ? <p className="text-sm text-danger">Erro ao carregar plano alimentar.</p> : null}
@@ -28,34 +31,32 @@ export default function NutritionPlanPage() {
         <div className="space-y-4">
           <Card>
             <CardHeader><CardTitle>{plan.patientName}</CardTitle></CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">Objetivo: {plan.objetivo}</p>
               <p className="text-sm text-muted-foreground">Válido até: {plan.validade}</p>
-              <div className="mt-4 grid gap-3">
-                {plan.itens.map((item) => (
-                  <div key={item.id} className="rounded-2xl border border-border bg-white p-4 shadow-sm">
-                    <p className="text-xs text-muted-foreground">{item.horario} • {item.refeicao}</p>
-                    <p className="text-sm"><span className="font-medium">Fonte proteica:</span> {item.fonteProteica}</p>
-                    <p className="text-sm"><span className="font-medium">Carboidrato:</span> {item.carboidrato}</p>
-                    <p className="text-sm"><span className="font-medium">Gordura boa:</span> {item.gorduraBoa}</p>
-                  </div>
-                ))}
+              <MacroSummary kcal={plan.kcal} proteinPct={plan.macroSplit.proteinPct} carbPct={plan.macroSplit.carbPct} fatPct={plan.macroSplit.fatPct} />
+              <div className="grid gap-3">{plan.itens.map((item) => <MealCard key={item.id} item={item} />)}</div>
+              <div className="flex flex-wrap gap-2">
+                <Button size="sm">Salvar rascunho</Button>
+                <Button size="sm" variant="outline">Gerar documento</Button>
+                <Button size="sm" variant="secondary">Enviar ao paciente (simulado)</Button>
               </div>
             </CardContent>
           </Card>
 
-          <DocumentPreviewCard
-            title={`Plano alimentar - ${plan.patientName}`}
-            subtitle={`Documento simulado • validade ${plan.validade}`}
-            sections={plan.itens.map((item) => ({
-              heading: `${item.horario} - ${item.refeicao}`,
-              lines: [
-                `Fonte proteica: ${item.fonteProteica}`,
-                `Carboidrato: ${item.carboidrato}`,
-                `Gordura boa: ${item.gorduraBoa}`,
-              ],
-            }))}
-          />
+          <Card>
+            <CardHeader><CardTitle>Histórico e modelos</CardTitle></CardHeader>
+            <CardContent className="space-y-2">
+              {plan.historico.map((item) => (
+                <div key={item.id} className="rounded-xl border border-border p-3 text-sm">
+                  <p className="font-medium text-slate-900">{item.nome}</p>
+                  <p className="text-muted-foreground">{item.data} • status: {item.status}</p>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          <NutritionPlanPreview plan={plan} />
         </div>
       ) : null}
 
