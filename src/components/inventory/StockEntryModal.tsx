@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
+import { suppliers } from "@/data/mock/inventory";
 
 type StockEntryModalProps = {
   itemName: string;
@@ -18,6 +19,9 @@ export function StockEntryModal({ itemName, unit, onClose }: StockEntryModalProp
   const [quantity, setQuantity] = useState("12");
   const [unitCost, setUnitCost] = useState("35.90");
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const parsedQuantity = Number(quantity.replace(",", "."));
+  const parsedUnitCost = Number(unitCost.replace(",", "."));
+  const hasInvalidCosts = Number.isNaN(parsedQuantity) || Number.isNaN(parsedUnitCost) || parsedQuantity <= 0 || parsedUnitCost <= 0;
 
   const totalCost = useMemo(() => {
     const q = Number(quantity.replace(",", "."));
@@ -33,7 +37,7 @@ export function StockEntryModal({ itemName, unit, onClose }: StockEntryModalProp
         footer={
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={onClose}>Cancelar</Button>
-            <Button onClick={() => setConfirmOpen(true)}>Confirmar entrada</Button>
+            <Button disabled={hasInvalidCosts} onClick={() => setConfirmOpen(true)}>{hasInvalidCosts ? "Ajuste os campos" : "Confirmar entrada"}</Button>
           </div>
         }
       >
@@ -46,12 +50,17 @@ export function StockEntryModal({ itemName, unit, onClose }: StockEntryModalProp
           <div className="grid gap-3 md:grid-cols-2">
             <Input label="Item" defaultValue={itemName} />
             <Input label="Unidade" defaultValue={unit.toUpperCase()} />
-            <Input label="Fornecedor" placeholder="Nome do fornecedor" />
+            <label className="space-y-2 text-sm font-medium text-slate-700">
+              Fornecedor
+              <select className="h-11 w-full rounded-2xl border border-input bg-white px-3 text-sm text-slate-900">
+                {suppliers.map((supplier) => <option key={supplier.id}>{supplier.nome}</option>)}
+              </select>
+            </label>
             <Input label="Número da nota" placeholder="NF-000123" />
             <Input label="Lote" placeholder="L2026-05" />
             <Input label="Validade" type="date" />
-            <Input label="Quantidade" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-            <Input label="Custo unitário (R$)" value={unitCost} onChange={(e) => setUnitCost(e.target.value)} />
+            <Input label="Quantidade" value={quantity} onChange={(e) => setQuantity(e.target.value)} error={parsedQuantity <= 0 || Number.isNaN(parsedQuantity) ? "Informe uma quantidade válida." : undefined} />
+            <Input label="Custo unitário (R$)" value={unitCost} onChange={(e) => setUnitCost(e.target.value)} error={parsedUnitCost <= 0 || Number.isNaN(parsedUnitCost) ? "Informe um custo unitário válido." : undefined} />
             <Input label="Custo total (R$)" value={totalCost} readOnly className="bg-slate-50" />
             <label className="flex items-center gap-2 rounded-xl border border-input px-3 py-2 text-sm text-slate-700">
               <input type="checkbox" className="h-4 w-4" /> Criar novo lote
@@ -62,6 +71,8 @@ export function StockEntryModal({ itemName, unit, onClose }: StockEntryModalProp
             <p className="mb-2 font-medium text-slate-800">Upload visual de nota</p>
             <p className="flex items-center gap-2"><Upload className="h-4 w-4" /> Arraste o arquivo aqui (simulado)</p>
           </div>
+
+          <p className="text-xs text-slate-500">Estados LEEF do fluxo ficam disponíveis nas rotas de estoque com <code>?state=loading|empty|error|forbidden</code>.</p>
 
           <Textarea label="Observações" placeholder="Detalhes da entrada, conferência e responsável." />
         </div>
