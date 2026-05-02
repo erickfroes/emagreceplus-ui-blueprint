@@ -1,16 +1,61 @@
 import type { UiState } from "./common";
 
-export interface PatientReportKpi { label: string; value: string; }
-export interface PatientReportRow { id: string; date: string; description: string; value: string; status: string; }
+export type PatientReportTab = "financial" | "packages" | "services" | "documents" | "adherence" | "timeline";
 
-export interface PatientReportDto {
-  state: UiState;
+export interface PatientReportHeader {
   patientName: string;
+  patientAge: number;
+  patientStatus: string;
   activePackage: string;
   financialStatus: string;
   clinicalStatus: string;
+}
+
+export interface PatientReportKpi {
+  id: string;
+  label: string;
+  value: string;
+}
+
+export interface PatientReportInstallmentRow {
+  id: string;
+  dueDate: string;
+  installment: string;
+  amount: string;
+  status: string;
+}
+
+export interface PatientReportServiceRow {
+  id: string;
+  date: string;
+  service: string;
+  consumed: string;
+  status: string;
+}
+
+export interface PatientReportDocumentRow {
+  id: string;
+  document: string;
+  provider: "d4sign" | "interno";
+  updatedAt: string;
+  status: string;
+}
+
+export interface PatientReportSidebarAlert {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface PatientReportDto {
+  state: UiState;
+  financialState: UiState;
+  header: PatientReportHeader;
+  defaultTab: PatientReportTab;
   kpis: PatientReportKpi[];
-  installments: PatientReportRow[];
-  consumedServices: PatientReportRow[];
-  alerts: string[];
+  installments: PatientReportInstallmentRow[];
+  consumedServices: PatientReportServiceRow[];
+  documents: PatientReportDocumentRow[];
+  timeline: Array<{ id: string; date: string; title: string; description: string }>;
+  sidebar: PatientReportSidebarAlert[];
 }
