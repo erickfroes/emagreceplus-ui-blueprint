@@ -48,3 +48,20 @@ export interface FinanceUiState {
   activeModal?: FinanceModal;
   pendingAction?: FinanceAction;
 }
+
+export interface ReceivablePaymentRegistration {
+  receivableId: string;
+  patient: string;
+  description: string;
+  originalAmountCents: number;
+  openAmountCents: number;
+  receivedAmountCents: number;
+  paymentDate: string;
+  paymentMethod: "pix" | "bank_slip" | "credit_card" | "cash" | "bank_transfer";
+  cashAccountLabel: string;
+  receiptUploadStatus: "simulado" | "nao_configurado";
+  notes?: string;
+  partialPayment: boolean;
+  shouldGenerateReceipt: boolean;
+  shouldSendProofToPatient: boolean;
+}

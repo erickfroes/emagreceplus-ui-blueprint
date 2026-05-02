@@ -15,6 +15,7 @@ type PaymentRegistrationModalProps = {
     id: string;
     patient: string;
     description: string;
+    originalAmount: number;
     openAmount: number;
   };
   canSendReceiptToPatient?: boolean;
@@ -60,6 +61,7 @@ export function PaymentRegistrationModal({
 
   const receivedValueNumber = Number(receivedAmount.replace(",", "."));
   const remainingAmount = useMemo(() => Math.max(receivable.openAmount - receivedValueNumber, 0), [receivable.openAmount, receivedValueNumber]);
+  const overpayment = receivedValueNumber > receivable.openAmount;
 
   useEffect(() => {
     if (receivedValueNumber >= receivable.openAmount) {
@@ -75,6 +77,11 @@ export function PaymentRegistrationModal({
 
     if (partialPayment && receivedValueNumber >= receivable.openAmount) {
       setFormError("Pagamento parcial ativo: o valor recebido deve ser menor que o valor em aberto.");
+      return false;
+    }
+
+    if (overpayment) {
+      setFormError("O valor recebido não pode ser maior que o valor em aberto.");
       return false;
     }
 
@@ -113,12 +120,14 @@ export function PaymentRegistrationModal({
         <div className="space-y-4 text-sm">
           <div className="rounded-2xl border border-amber-200 bg-amber-50 p-3 text-amber-900">
             <div className="mb-1 flex items-center gap-2 font-medium"><ShieldAlert className="h-4 w-4" /> Aviso de auditoria</div>
-            <p>Baixa simulada (UI-only), sem integração real com Asaas e sem persistência em backend nesta fase.</p>
+            <p>Esta ação será registrada na auditoria financeira.</p>
+            <p className="mt-1 text-xs">Baixa simulada (UI-only), sem integração real com Asaas e sem persistência em backend nesta fase.</p>
           </div>
 
           <div className="grid gap-3 md:grid-cols-2">
             <label className="space-y-1"><span className="text-xs text-slate-600">Paciente</span><input className="w-full rounded-xl border px-3 py-2" value={receivable.patient} disabled /></label>
             <label className="space-y-1"><span className="text-xs text-slate-600">Descrição da cobrança</span><input className="w-full rounded-xl border px-3 py-2" value={receivable.description} disabled /></label>
+            <label className="space-y-1"><span className="text-xs text-slate-600">Valor original</span><input className="w-full rounded-xl border px-3 py-2" value={formatCurrency(receivable.originalAmount)} disabled /></label>
             <label className="space-y-1"><span className="text-xs text-slate-600">Valor em aberto</span><input className="w-full rounded-xl border px-3 py-2" value={formatCurrency(receivable.openAmount)} disabled /></label>
             <label className="space-y-1"><span className="text-xs text-slate-600">Valor recebido</span><input className="w-full rounded-xl border px-3 py-2" value={receivedAmount} onChange={(e) => setReceivedAmount(e.target.value)} /></label>
             <label className="space-y-1"><span className="text-xs text-slate-600">Data do pagamento</span><input type="date" className="w-full rounded-xl border px-3 py-2" value={paymentDate} onChange={(e) => setPaymentDate(e.target.value)} /></label>
@@ -134,11 +143,12 @@ export function PaymentRegistrationModal({
           </div>
 
           <div className="space-y-2 rounded-2xl border p-3">
-            <label className="flex items-center gap-2"><input type="checkbox" checked={generateReceipt} onChange={(e) => setGenerateReceipt(e.target.checked)} /><span>Gerar recibo</span></label>
+            <label className="flex items-center gap-2"><input type="checkbox" checked={generateReceipt} onChange={(e) => setGenerateReceipt(e.target.checked)} /><span>Gerar recibo após confirmar baixa</span></label>
             <label className="flex items-center gap-2"><input type="checkbox" checked={sendProofToPatient} disabled={!canSendReceiptToPatient} onChange={(e) => setSendProofToPatient(e.target.checked)} /><span>Enviar comprovante ao paciente</span></label>
             {!canSendReceiptToPatient ? <p className="text-xs text-amber-700">Envio automático indisponível no perfil atual (visualmente bloqueado).</p> : null}
           </div>
 
+          {overpayment ? <div className="rounded-xl border border-red-300 bg-red-50 px-3 py-2 text-red-700">Valor recebido acima do valor em aberto.</div> : null}
           {formError ? <div className="rounded-xl border border-red-300 bg-red-50 px-3 py-2 text-red-700">{formError}</div> : null}
         </div>
       </Modal>
