@@ -7,7 +7,7 @@ const settingsMenu: SidebarItem[] = [
   { label: "Equipe", href: "/settings/team" },
   { label: "Permissões", href: "/settings/permissions" },
   { label: "Documentos", href: "/settings/documents" },
-  { label: "Assinatura Digital", href: "/settings/digital-signature" },
+  { label: "Assinatura Digital", href: "/settings/signature" },
   { label: "Plano e Cobrança", href: "/settings/billing" },
   { label: "Integrações", href: "/settings/integrations" },
   { label: "Logs de auditoria", href: "/settings/audit-logs" },
