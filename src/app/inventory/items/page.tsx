@@ -3,6 +3,7 @@ import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { InventoryStateBlock } from "@/components/inventory/InventoryStateBlock";
+import { InventoryMovementActions } from "@/components/inventory/InventoryMovementActions";
 import { inventoryItems, isExpired, resolveInventoryUiState } from "@/data/mock/inventory";
 
 export default async function InventoryItemsPage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
@@ -22,5 +23,7 @@ export default async function InventoryItemsPage({ searchParams }: { searchParam
         })}
       </tbody></table></CardContent>
     </Card> : <InventoryStateBlock state={state} entity="itens de estoque" />}
+
+    {state === "default" ? <div className="mt-6"><InventoryMovementActions itemName={inventoryItems[0].nome} unit={inventoryItems[0].unidade} lot={inventoryItems[0].lote} currentStock={inventoryItems[0].quantidade} /></div> : null}
   </DashboardShell>;
 }

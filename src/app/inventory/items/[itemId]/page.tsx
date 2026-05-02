@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { StockMovementModalMock } from "@/components/inventory/StockMovementModalMock";
+import { InventoryMovementActions } from "@/components/inventory/InventoryMovementActions";
 import { inventoryItems, isExpired } from "@/data/mock/inventory";
 
 export default async function InventoryItemDetailPage({ params }: { params: Promise<{ itemId: string }> }) {
@@ -18,9 +18,6 @@ export default async function InventoryItemDetailPage({ params }: { params: Prom
       <p>Lote: <strong>{item.lote}</strong></p><p>Local: <strong>{item.local}</strong></p><p>Saldo: <strong>{item.quantidade} {item.unidade}</strong></p><p>Estoque mínimo: <strong>{item.estoqueMinimo}</strong></p><p>Fornecedor: <strong>{item.fornecedor}</strong></p><p>Validade: <strong>{item.validade}</strong> {expired ? <Badge tone="danger">vencida</Badge> : <Badge tone="success">ok</Badge>}</p>
     </CardContent></Card>
 
-    <div className="grid gap-4 lg:grid-cols-2">
-      <StockMovementModalMock title="Modal de entrada" currentStock={item.quantidade} requested={12} />
-      <StockMovementModalMock title="Modal de saída" currentStock={item.quantidade} requested={item.quantidade + 5} />
-    </div>
+    <InventoryMovementActions itemName={item.nome} unit={item.unidade} lot={item.lote} currentStock={item.quantidade} />
   </DashboardShell>;
 }
