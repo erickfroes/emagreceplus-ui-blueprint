@@ -28,8 +28,8 @@ export default async function DocumentDetailPage({ params }: { params: Promise<{
           <CardContent className="space-y-3 text-sm">
             <p><span className="text-muted-foreground">Paciente:</span> {document.patientName}</p>
             <p><span className="text-muted-foreground">Criado em:</span> {document.createdAt}</p>
-            <p><span className="text-muted-foreground">Assinantes:</span> {document.signerCount}</p>
-            <p><span className="text-muted-foreground">Provider:</span> D4Sign ({document.providerMode})</p>
+            <p><span className="text-muted-foreground">Signatários:</span> {document.signerCount}</p>
+            <p><span className="text-muted-foreground">Provedor:</span> D4Sign ({document.providerMode})</p>
             <div className="flex items-center gap-2">
               <span className="text-muted-foreground">Status:</span>
               <Badge tone={document.status === "assinado" ? "success" : "warning"}>{document.status.replace("_", " ")}</Badge>

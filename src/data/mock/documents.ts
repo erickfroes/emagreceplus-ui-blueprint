@@ -31,17 +31,32 @@ export type DocumentEvidencePackage = {
   generatedAt: string;
   provider: "d4sign";
   providerMode: D4SignMode;
-  storageVisibility: "private_supabase_storage" | "private_secure_bucket";
+  statusLabel: "sem evidência" | "evidência parcial" | "evidência completa simulada";
+  externalDocumentId: string;
   integrity: {
-    manifestSha256: string;
+    artifactSha256: string;
+    packageSha256: string;
     eventsCount: number;
   };
-  files: Array<{
-    fileName: string;
-    mimeType: string;
-    sizeKb: number;
-    accessLevel: "privado";
-  }>;
+};
+
+export type EvidenceTimelineStep = {
+  step: "Documento gerado" | "Assinatura solicitada" | "Webhook recebido" | "Dossiê consolidado" | "Pacote gerado";
+  occurredAt: string;
+  status: "concluído" | "pendente";
+};
+
+export type EvidenceSigner = {
+  name: string;
+  email: string;
+  role: "Profissional" | "Paciente" | "Testemunha";
+};
+
+export type ProviderEvent = {
+  id: string;
+  occurredAt: string;
+  action: string;
+  source: "D4Sign simulado" | "Webhook simulado";
 };
 
 export type DocumentOperationalHealth = {
@@ -89,23 +104,39 @@ export const documentCenterItems: DocumentCenterItem[] = [
   },
 ];
 
+export const evidenceDossierStateByDocumentId: Record<string, DocumentsUiState> = {
+  "doc-ana-consentimento-2026": "default",
+  "doc-marcos-plano-2026": "loading",
+  "doc-sem-evidencia": "empty",
+  "doc-com-erro": "error",
+  "doc-restrito": "forbidden",
+};
+
 export const evidenceEventsByDocumentId: Record<string, DocumentEvidenceEvent[]> = {
   "doc-ana-consentimento-2026": [
     {
       id: "ev-01",
       occurredAt: "2026-04-27 13:22",
       actor: "Nutricionista Juliana Freitas",
-      action: "Criou documento no centro documental",
+      action: "Documento gerado no centro documental",
       channel: "web",
-      signatureHash: "6f9f88e1a4b...",
+      signatureHash: "6f9f88e1a4bf19d8c0e7314ab17",
     },
     {
       id: "ev-02",
       occurredAt: "2026-04-27 13:24",
-      actor: "D4Sign (simulado)",
-      action: "Gerou envelope de assinatura",
+      actor: "Serviço de assinatura (simulado)",
+      action: "Assinatura solicitada para signatários",
       channel: "worker",
-      signatureHash: "8adf130ab77...",
+      signatureHash: "8adf130ab77be21cd90920eff44",
+    },
+    {
+      id: "ev-03",
+      occurredAt: "2026-04-27 13:29",
+      actor: "Webhook simulado",
+      action: "Dossiê consolidado com trilha de auditoria",
+      channel: "api",
+      signatureHash: "31bd09aa9200beef4456aacd222",
     },
   ],
 };
@@ -116,15 +147,13 @@ export const evidencePackageByDocumentId: Record<string, DocumentEvidencePackage
     generatedAt: "2026-04-27 13:30",
     provider: "d4sign",
     providerMode: "simulated",
-    storageVisibility: "private_supabase_storage",
+    statusLabel: "evidência completa simulada",
+    externalDocumentId: "d4s-doc-sim-009912",
     integrity: {
-      manifestSha256: "bd13cd8af0e7b7fa...",
-      eventsCount: 2,
+      artifactSha256: "8f96d082fa5a20e956f4a67f0a992d094fb6f870f59cda71a8197b7265a99c1a",
+      packageSha256: "a3fb42d6f6ed6f5f1c1b35df9870fbe1a9fa0107ee1d51e6ad3a8fd8b20afe45",
+      eventsCount: 3,
     },
-    files: [
-      { fileName: "termo-consentimento.pdf", mimeType: "application/pdf", sizeKb: 412, accessLevel: "privado" },
-      { fileName: "audit-log.json", mimeType: "application/json", sizeKb: 54, accessLevel: "privado" },
-    ],
   },
 };
 
@@ -147,4 +176,37 @@ export const d4signConfigMock = {
   cryptKey: "não configurado",
   safeUuid: "não configurado",
   webhookSecret: "não configurado",
+};
+
+
+export const signersByDocumentId: Record<string, EvidenceSigner[]> = {
+  "doc-ana-consentimento-2026": [
+    { name: "Juliana Freitas", email: "juliana@clinic.local", role: "Profissional" },
+    { name: "Ana Paula Lima", email: "ana.paciente@demo.local", role: "Paciente" },
+  ],
+};
+
+export const providerEventsByDocumentId: Record<string, ProviderEvent[]> = {
+  "doc-ana-consentimento-2026": [
+    { id: "pv-01", occurredAt: "2026-04-27 13:24", action: "Envelope criado", source: "D4Sign simulado" },
+    { id: "pv-02", occurredAt: "2026-04-27 13:28", action: "Assinatura concluída", source: "D4Sign simulado" },
+    { id: "pv-03", occurredAt: "2026-04-27 13:29", action: "Webhook recebido", source: "Webhook simulado" },
+  ],
+};
+
+export const timelineByDocumentId: Record<string, EvidenceTimelineStep[]> = {
+  "doc-ana-consentimento-2026": [
+    { step: "Documento gerado", occurredAt: "2026-04-27 13:22", status: "concluído" },
+    { step: "Assinatura solicitada", occurredAt: "2026-04-27 13:24", status: "concluído" },
+    { step: "Webhook recebido", occurredAt: "2026-04-27 13:29", status: "concluído" },
+    { step: "Dossiê consolidado", occurredAt: "2026-04-27 13:29", status: "concluído" },
+    { step: "Pacote gerado", occurredAt: "2026-04-27 13:30", status: "concluído" },
+  ],
+  "doc-marcos-plano-2026": [
+    { step: "Documento gerado", occurredAt: "2026-04-19 08:41", status: "concluído" },
+    { step: "Assinatura solicitada", occurredAt: "2026-04-19 08:44", status: "concluído" },
+    { step: "Webhook recebido", occurredAt: "2026-04-19 08:47", status: "pendente" },
+    { step: "Dossiê consolidado", occurredAt: "—", status: "pendente" },
+    { step: "Pacote gerado", occurredAt: "—", status: "pendente" },
+  ],
 };
