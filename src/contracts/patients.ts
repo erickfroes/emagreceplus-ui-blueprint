@@ -14,8 +14,26 @@ export interface Patient {
   pendencias: number;
 }
 
-export interface PatientTimelineEvent { id: string; data: string; titulo: string; descricao: string }
+export interface PatientTimelineEvent {
+  id: string;
+  data: string;
+  titulo: string;
+  descricao: string;
+}
 
+export interface PatientListDto { state: UiState; items: Patient[] }
+export interface PatientDetailDto {
+  patient: Patient;
+  adesaoPercentual: number;
+  metasAtivas: number;
+  pendencias: number;
+  timeline: PatientTimelineEvent[];
+}
+
+export type PatientAction = "open_chart" | "schedule_followup" | "archive_patient";
+export type PatientModal = "patient_overview" | "confirm_archive_patient";
+
+// Compat para providers atuais
 export interface PatientDetail {
   patient: Patient;
   resumoClinico: string;
