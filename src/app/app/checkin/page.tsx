@@ -5,8 +5,18 @@ import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
 import { Input } from "@/components/ui/Input";
 import { StatePreview } from "@/components/patient-mobile/StatePreview";
+import { resolveUiState } from "@/data/mock/ui-states";
+import { LoadingState } from "@/components/ui/LoadingState";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { ForbiddenState } from "@/components/ui/ForbiddenState";
 
-export default function WeeklyCheckinPage() {
+export default async function WeeklyCheckinPage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
+  const state = resolveUiState((await searchParams)?.state);
+  if (state === "loading") return <MobileAppShell active="Plano"><LoadingState title="Carregando check-in semanal" /></MobileAppShell>;
+  if (state === "empty") return <MobileAppShell active="Plano"><EmptyState title="Sem perguntas de check-in" /></MobileAppShell>;
+  if (state === "error") return <MobileAppShell active="Plano"><ErrorState title="Falha ao carregar check-in" /></MobileAppShell>;
+  if (state === "forbidden") return <MobileAppShell active="Plano"><ForbiddenState title="Acesso negado ao check-in" /></MobileAppShell>;
   const steps = ["Etapa 1: rotina", "Etapa 2: hábitos", "Etapa 3: percepção", "Etapa 4: revisão"];
 
   return (

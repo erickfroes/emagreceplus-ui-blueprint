@@ -4,8 +4,18 @@ import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { StatePreview } from "@/components/patient-mobile/StatePreview";
+import { resolveUiState } from "@/data/mock/ui-states";
+import { LoadingState } from "@/components/ui/LoadingState";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { ForbiddenState } from "@/components/ui/ForbiddenState";
 
-export default function WorkoutsModalPage() {
+export default async function WorkoutsModalPage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
+  const state = resolveUiState((await searchParams)?.state);
+  if (state === "loading") return <MobileAppShell active="Plano"><LoadingState title="Carregando treino" /></MobileAppShell>;
+  if (state === "empty") return <MobileAppShell active="Plano"><EmptyState title="Sem treino planejado" /></MobileAppShell>;
+  if (state === "error") return <MobileAppShell active="Plano"><ErrorState title="Falha ao carregar treino" /></MobileAppShell>;
+  if (state === "forbidden") return <MobileAppShell active="Plano"><ForbiddenState title="Acesso negado ao treino" /></MobileAppShell>;
   return (
     <MobileAppShell active="Plano">
       <Modal title="Registrar treino" className="max-w-sm" footer={<Button className="w-full">Concluir treino</Button>}>

@@ -10,7 +10,9 @@ type MembershipRow = {
   status: string;
 };
 
-export default async function EnvironmentPage() {
+export default async function EnvironmentPage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
+  const params = searchParams ? await searchParams : undefined;
+  const state = params?.state === "loading" || params?.state === "empty" || params?.state === "error" || params?.state === "forbidden" ? params.state : "default";
   const supabase = await createClient();
   const { data: authData } = await supabase.auth.getUser();
   if (!authData.user) redirect("/auth/login");
@@ -33,7 +35,7 @@ export default async function EnvironmentPage() {
     <main className="ep-page min-h-screen p-6">
       <div className="mx-auto max-w-4xl">
         <h1 className="mb-4 text-2xl font-semibold text-slate-950">Selecionar unidade</h1>
-        <form action={selectUnit}><EnvironmentSelectionView items={items} /></form>
+        <form action={selectUnit}><EnvironmentSelectionView items={items} state={state} /></form>
       </div>
     </main>
   );

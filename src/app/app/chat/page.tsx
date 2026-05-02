@@ -4,8 +4,18 @@ import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { StatePreview } from "@/components/patient-mobile/StatePreview";
+import { resolveUiState } from "@/data/mock/ui-states";
+import { LoadingState } from "@/components/ui/LoadingState";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { ForbiddenState } from "@/components/ui/ForbiddenState";
 
-export default function PatientChatPage() {
+export default async function PatientChatPage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
+  const state = resolveUiState((await searchParams)?.state);
+  if (state === "loading") return <MobileAppShell active="Chat"><LoadingState title="Carregando chat" /></MobileAppShell>;
+  if (state === "empty") return <MobileAppShell active="Chat"><EmptyState title="Sem mensagens no chat" /></MobileAppShell>;
+  if (state === "error") return <MobileAppShell active="Chat"><ErrorState title="Falha ao carregar chat" /></MobileAppShell>;
+  if (state === "forbidden") return <MobileAppShell active="Chat"><ForbiddenState title="Acesso negado ao chat" /></MobileAppShell>;
   const messages = [
     { from: "Nutricionista", text: "Bom dia, Juliana! Como foi sua hidratação ontem?" },
     { from: "Você", text: "Consegui 2 litros. Hoje vou ajustar para bater a meta." },
