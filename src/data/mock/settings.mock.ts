@@ -45,11 +45,13 @@ export const settingsTeamMembersMock: TeamMember[] = [
   { id: "t1", name: "Ana Lima", role: "Admin", status: "ativo" },
   { id: "t2", name: "Paulo Nunes", role: "Nutricionista", status: "ativo" },
   { id: "t3", name: "Marta Reis", role: "Recepção", status: "ativo" },
+  { id: "t4", name: "Carlos Teixeira", role: "Financeiro", status: "inativo" },
 ];
 
 export const settingsTeamInvitesMock: TeamInvitation[] = [
   { email: "novo.profissional@emagreceplus.app", role: "Nutricionista", status: "pendente" },
   { email: "financeiro@emagreceplus.app", role: "Financeiro", status: "expirado" },
+  { email: "coord.unidade@emagreceplus.app", role: "Coordenador", status: "aceito" },
 ];
 
 export const settingsPermissionsMock: PermissionMatrix[] = [
@@ -57,17 +59,20 @@ export const settingsPermissionsMock: PermissionMatrix[] = [
   { permission: "Planos alimentares", admin: true, nutricionista: true, recepcao: false },
   { permission: "Financeiro", admin: true, nutricionista: false, recepcao: false },
   { permission: "Configurações", admin: true, nutricionista: false, recepcao: false },
+  { permission: "Documentos", admin: true, nutricionista: true, recepcao: false },
 ];
 
 export const settingsIntegrationsMock: IntegrationStatus[] = [
   { provider: "D4Sign", purpose: "Assinatura documental", status: "não configurado (simulado)" },
-  { provider: "Asaas", purpose: "Cobrança SaaS", status: "não configurado (simulado)" },
+  { provider: "Asaas", purpose: "Cobrança SaaS", status: "planejado (simulado)" },
+  { provider: "Supabase", purpose: "Infraestrutura de dados futura", status: "futuro/documentado" },
 ];
 
 export const settingsAuditLogsMock: AuditLogEntry[] = [
-  { at: "2026-05-02 09:13", actor: "admin@emagreceplus.app", action: "Atualizou timezone" },
-  { at: "2026-05-02 08:21", actor: "coordenacao@emagreceplus.app", action: "Editou dados públicos" },
-  { at: "2026-05-01 18:47", actor: "admin@emagreceplus.app", action: "Revisou permissões" },
+  { id: "l1", at: "2026-05-02 09:13", actor: "admin@emagreceplus.app", action: "Atualizou timezone", module: "settings", severity: "info" },
+  { id: "l2", at: "2026-05-02 08:21", actor: "coordenacao@emagreceplus.app", action: "Editou dados públicos", module: "settings", severity: "warning" },
+  { id: "l3", at: "2026-05-01 18:47", actor: "admin@emagreceplus.app", action: "Revisou permissões", module: "team", severity: "critical" },
+  { id: "l4", at: "2026-05-01 16:09", actor: "recepcao@emagreceplus.app", action: "Visualizou cadastro do paciente", module: "patients", severity: "info" },
 ];
 
 export const settingsBillingMock: BillingSettings = {

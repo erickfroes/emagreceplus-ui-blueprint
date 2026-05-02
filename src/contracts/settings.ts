@@ -61,15 +61,18 @@ export interface PermissionMatrix {
 }
 
 export interface IntegrationStatus {
-  provider: "D4Sign" | "Asaas";
+  provider: "D4Sign" | "Asaas" | "Supabase";
   purpose: string;
   status: string;
 }
 
 export interface AuditLogEntry {
+  id: string;
   at: string;
   actor: string;
   action: string;
+  module: "settings" | "patients" | "finance" | "documents" | "team";
+  severity: "info" | "warning" | "critical";
 }
 
 export interface BillingSettings {
