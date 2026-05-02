@@ -27,7 +27,7 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 13 | Prescrições | `/prescriptions/[prescriptionId]` | parcial | prescription view | sim (`prescriptions`) | sim (`prescriptions`) | sim | Histórico/preview avançado | A |
 | 14 | Centro Documental | `/documents` | sim | documents list view | sim (`documents`) | sim (`documents`) | sim | Consolidar filtros/KPIs dedicados | M |
 | 15 | Detalhe Documento | `/documents/[documentId]` | sim | document detail view | sim (`documents`) | sim (`documents`) | sim | Expandir audit timeline visual | M |
-| 16 | Dossiê de evidência | `/documents/[documentId]/evidence` | parcial | evidence view | sim (`documents`) | sim (`documents`) | sim textual | Estruturar hash/eventos/timeline completos | A |
+| 16 | Dossiê de evidência | `/documents/[documentId]/evidence` | sim | evidence view | sim (`documents`) | sim (`documents`) | sim | Concluído em UI-only com hash/eventos/timeline simulados | A |
 | 17 | Health Documental | `/documents/ops/health` | sim | ops health view | sim (`documents`) | sim (`documents`) | sim textual | Melhorar gráficos operacionais | M |
 | 18 | Notificações | `/notifications` | sim | `NotificationsView` | sim (`notifications`) | sim (`notifications`) | sim | — | A |
 | 19 | Chat Equipe | `/chat` | sim | `StaffChatView` | sim (`chat`) | sim (`chat`) | sim | — | A |
@@ -66,21 +66,20 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 52 | Relatório Paciente | `/patients/[patientId]/report` | parcial | `ReportStateSection` + cards | sim (`reports/patients`) | sim (`reports/patients`) | parcial | Header/tabs/uso serviços/pagamentos completo | A |
 
 ## Totais
-- ✅ **completas**: 18
-- 🟡 **parciais**: 31
+- ✅ **completas**: 19
+- 🟡 **parciais**: 30
 - 🔴 **faltantes**: 2
 
 ## Top 10 pendências de maior impacto
-1. Implementar **Dossiê de evidência** completo com timeline/hash/eventos (`#16`).
-2. Implementar **Modal de Pagamento** reutilizável (`#33`).
-3. Fechar lacunas dos modais de **Entrada/Saída de Estoque** (`#45/#46`).
-4. Completar fluxo clínico central de **SOAP + Anamnese** (`#10/#11`).
-5. Completar **Relatório do Paciente** aderente ao mapa final (`#52`).
-6. Estruturar **Config Clínica** dedicada e harmonizar rotas/settings (`#26`).
-7. Elevar **Chat Mobile** para LEEF explícito (`#20`).
-8. Criar rota/tela de **Pagamento Modal** integrada ao fluxo de venda (`#33`).
-9. Expandir drag/drop e blocos avançados do **Editor de Documento** (`#27`).
-10. Conectar adapters de validação para **D4Sign Settings** mantendo modo simulado (`#28`).
+1. Implementar **Modal de Pagamento** reutilizável (`#33`).
+2. Fechar lacunas dos modais de **Entrada/Saída de Estoque** (`#45/#46`).
+3. Completar fluxo clínico central de **SOAP + Anamnese** (`#10/#11`).
+4. Completar **Relatório do Paciente** aderente ao mapa final (`#52`).
+5. Estruturar **Config Clínica** dedicada e harmonizar rotas/settings (`#26`).
+6. Elevar **Chat Mobile** para LEEF explícito (`#20`).
+7. Criar rota/tela de **Pagamento Modal** integrada ao fluxo de venda (`#33`).
+8. Expandir drag/drop e blocos avançados do **Editor de Documento** (`#27`).
+9. Conectar adapters de validação para **D4Sign Settings** mantendo modo simulado (`#28`).
 
 ## Próxima task recomendada
 Executar uma sprint de “**críticos A remanescentes**” focada em `#33`, `#16`, `#52`, `#10/#11` e `#45/#46`, consolidando componentes centrais e LEEF padronizado.
