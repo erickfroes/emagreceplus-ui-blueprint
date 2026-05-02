@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
+import { encounterLinksMock, stockOutputReasons } from "@/data/mock/inventory";
 
 type StockOutputModalProps = {
   itemName: string;
@@ -21,6 +22,7 @@ type StockOutputModalProps = {
 export function StockOutputModal({ itemName, unit, currentStock, defaultLot, onClose }: StockOutputModalProps) {
   const [quantity, setQuantity] = useState(String(currentStock + 2));
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [encounterState, setEncounterState] = useState<"disponivel" | "loading" | "empty" | "error" | "forbidden">("disponivel");
   const requested = Number(quantity);
   const blocked = Number.isNaN(requested) || requested > currentStock || requested <= 0;
 
@@ -52,15 +54,29 @@ export function StockOutputModal({ itemName, unit, currentStock, defaultLot, onC
             <Input label="Lote" defaultValue={defaultLot} />
             <Input label="Quantidade" value={quantity} onChange={(e) => setQuantity(e.target.value)} error={blocked ? "Quantidade acima do estoque disponível." : undefined} />
             <SelectField label="Motivo" defaultValue="Uso em atendimento">
-              <option>Uso em atendimento</option>
-              <option>Venda</option>
-              <option>Perda</option>
-              <option>Vencimento</option>
-              <option>Ajuste</option>
+              {stockOutputReasons.map((reason) => <option key={reason}>{reason}</option>)}
             </SelectField>
-            <Input label="Vínculo opcional (atendimento/paciente)" placeholder="Ex.: Atend. ENC-2026-114 / Paciente Maria" />
+            <label className="space-y-2 text-sm font-medium text-slate-700">
+              Vínculo opcional com atendimento/paciente
+              {encounterState === "disponivel" ? <select className="h-11 w-full rounded-2xl border border-input bg-white px-3 text-sm text-slate-900"><option>Sem vínculo</option>{encounterLinksMock.map((link) => <option key={link.id}>{link.label} · {link.patientName}</option>)}</select> : null}
+              {encounterState === "loading" ? <p className="rounded-xl bg-slate-100 p-2 text-xs text-slate-600">Carregando vínculos simulados...</p> : null}
+              {encounterState === "empty" ? <p className="rounded-xl bg-slate-100 p-2 text-xs text-slate-600">Nenhum atendimento elegível no momento.</p> : null}
+              {encounterState === "error" ? <p className="rounded-xl border border-danger/20 bg-danger/10 p-2 text-xs text-danger">Erro ao buscar vínculos simulados.</p> : null}
+              {encounterState === "forbidden" ? <p className="rounded-xl border border-amber-200 bg-amber-50 p-2 text-xs text-amber-800">Sem permissão visual para vincular atendimento.</p> : null}
+            </label>
             <Input label="Responsável" placeholder="Profissional responsável" />
           </div>
+
+          <label className="space-y-2 text-sm font-medium text-slate-700">
+            Estado LEEF (vínculo opcional)
+            <select className="h-11 w-full rounded-2xl border border-input bg-white px-3 text-sm text-slate-900" value={encounterState} onChange={(e) => setEncounterState(e.target.value as "disponivel" | "loading" | "empty" | "error" | "forbidden") }>
+              <option value="disponivel">default</option>
+              <option value="loading">loading</option>
+              <option value="empty">empty</option>
+              <option value="error">error</option>
+              <option value="forbidden">forbidden</option>
+            </select>
+          </label>
 
           {blocked ? (
             <div className="rounded-2xl border border-danger/30 bg-danger/10 p-3 text-sm text-danger">
