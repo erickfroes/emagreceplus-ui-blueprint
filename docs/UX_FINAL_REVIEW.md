@@ -98,8 +98,8 @@ Observação:
 1. Reconciliação documental dos status finais no pacote UX/UI-only v1, removendo pendências já concluídas e mantendo apenas melhorias reais remanescentes.
 
 ## Pendências para freeze
-1. Harmonizar navegação e cobertura de estado nas rotas de settings ainda parciais (ex.: units/team/permissions/integrations/audit-logs) sem expandir escopo para backend.
+1. Manter como backlog incremental a harmonização de cobertura de estado em rotas de settings ainda parciais (`/settings/units`, `/settings/team`, `/settings/permissions`, `/settings/integrations`, `/settings/audit-logs`), sem expandir escopo para backend.
 2. Se desejado, formalizar cobertura LEEF também para páginas de suporte técnico (ex.: design-system) via bloco padrão.
 
 ## Parecer final
-**UI-only está praticamente pronto para freeze**, com arquitetura visual consistente e aderente às restrições de integração. Recomendado fechar as pendências de roteamento de settings antes do congelamento definitivo.
+**UI-only está pronto para freeze v1** (52 telas reconciliadas), com pendências remanescentes classificadas como melhoria incremental pós-freeze, não como bloqueio.
