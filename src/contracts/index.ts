@@ -14,3 +14,4 @@ export * from "./chat";
 export * from "./tenant";
 export * from "./crm";
 export * from "./patients";
+export * from "./settings";
