@@ -2,29 +2,38 @@ import { DashboardShell } from "@/components/layout/DashboardShell";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { createPackageAction } from "./actions";
-import { createClient } from "@/lib/ui-only/server";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { ForbiddenState } from "@/components/ui/ForbiddenState";
+import { LoadingState } from "@/components/ui/LoadingState";
+import { resolveUiState } from "@/data/mock/ui-states";
 
-export default async function NewPackagePage() {
-  const supabase = await createClient();
-  const { data: authData } = await supabase.auth.getUser();
-  if (!authData.user) return <DashboardShell active="Planos e Pacotes"><PageHeader title="Criar Pacote" description="forbidden" /></DashboardShell>;
+const services = [
+  { id: "srv-1", name: "Consulta nutricional" },
+  { id: "srv-2", name: "Acompanhamento mensal" },
+] as const;
 
-  const { data: servicesData, error } = await supabase.from("services").select("id,name,status").eq("status", "active");
-  const services = (servicesData ?? []) as Array<{ id: string; name: string }>;
+export default async function NewPackagePage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
+  const params = searchParams ? await searchParams : undefined;
+  const state = resolveUiState(params?.state);
 
-  return <DashboardShell active="Planos e Pacotes"><PageHeader title="Criar Pacote" description="Criação de pacote com persistência em Supabase." />
-    <Card><CardHeader><CardTitle>Configuração inicial</CardTitle></CardHeader><CardContent>
-      {error ? <p>error: {error.message}</p> : !services?.length ? <p>empty</p> : <form action={createPackageAction} className="space-y-3">
-        <input name="code" placeholder="Código" className="border rounded p-2 w-full" required />
-        <input name="name" placeholder="Nome do pacote" className="border rounded p-2 w-full" required />
-        <select name="serviceId" className="border rounded p-2 w-full" required>{services.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}</select>
-        <label className="block"><input type="checkbox" name="appEnabled" /> App</label>
-        <label className="block"><input type="checkbox" name="chatEnabled" /> Chat</label>
-        <label className="block"><input type="checkbox" name="documentsEnabled" /> Documentos</label>
-        <label className="block"><input type="checkbox" name="checkinEnabled" /> Check-in</label>
-        <Button type="submit">Publicar pacote</Button>
-      </form>}
-    </CardContent></Card>
+  return <DashboardShell active="Planos e Pacotes"><PageHeader title="Criar Pacote" description="Montagem de pacote com dados mockados e publicação simulada." />
+    {state === "loading" ? <LoadingState title="Carregando formulário" /> : null}
+    {state === "empty" ? <EmptyState title="Sem serviços disponíveis" description="Cadastre serviços simulados para montar novos pacotes." /> : null}
+    {state === "error" ? <ErrorState title="Falha ao abrir criação de pacote" /> : null}
+    {state === "forbidden" ? <ForbiddenState title="Acesso negado para criar pacotes" /> : null}
+
+    {state === "default" ? <Card><CardHeader><CardTitle>Configuração inicial</CardTitle></CardHeader><CardContent>
+      <form className="space-y-3">
+        <input name="code" placeholder="Código" className="w-full rounded-xl border border-border p-2" required />
+        <input name="name" placeholder="Nome do pacote" className="w-full rounded-xl border border-border p-2" required />
+        <select name="serviceId" className="w-full rounded-xl border border-border p-2" required>{services.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}</select>
+        <label className="block text-sm"><input type="checkbox" name="appEnabled" className="mr-2" />App</label>
+        <label className="block text-sm"><input type="checkbox" name="chatEnabled" className="mr-2" />Chat</label>
+        <label className="block text-sm"><input type="checkbox" name="documentsEnabled" className="mr-2" />Documentos</label>
+        <label className="block text-sm"><input type="checkbox" name="checkinEnabled" className="mr-2" />Check-in</label>
+        <Button type="button">Publicar pacote (simulado)</Button>
+      </form>
+    </CardContent></Card> : null}
   </DashboardShell>;
 }
