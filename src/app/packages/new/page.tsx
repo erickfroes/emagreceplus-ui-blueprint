@@ -10,7 +10,8 @@ export default async function NewPackagePage() {
   const { data: authData } = await supabase.auth.getUser();
   if (!authData.user) return <DashboardShell active="Planos e Pacotes"><PageHeader title="Criar Pacote" description="forbidden" /></DashboardShell>;
 
-  const { data: services, error } = await supabase.from("services").select("id,name,status").eq("status", "active");
+  const { data: servicesData, error } = await supabase.from("services").select("id,name,status").eq("status", "active");
+  const services = (servicesData ?? []) as Array<{ id: string; name: string }>;
 
   return <DashboardShell active="Planos e Pacotes"><PageHeader title="Criar Pacote" description="Criação de pacote com persistência em Supabase." />
     <Card><CardHeader><CardTitle>Configuração inicial</CardTitle></CardHeader><CardContent>

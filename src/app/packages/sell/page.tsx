@@ -12,11 +12,14 @@ export default async function SellPackagePage() {
   const { data: authData } = await supabase.auth.getUser();
   if (!authData.user) return <DashboardShell active="Planos e Pacotes"><PageHeader title="Vender Pacote" description="forbidden" /></DashboardShell>;
 
-  const [{ data: packages, error: packageError }, { data: patients, error: patientError }, { data: sales, error: salesError }] = await Promise.all([
+  const [{ data: packagesData, error: packageError }, { data: patientsData, error: patientError }, { data: salesData, error: salesError }] = await Promise.all([
     supabase.from("packages").select("id,name,current_version,status").eq("status", "published").order("updated_at", { ascending: false }),
     supabase.from("users").select("id,full_name").eq("status", "active").order("full_name", { ascending: true }),
     supabase.from("package_sales").select("id,sale_reference,status,total_cents,entitlements_released,created_at").order("created_at", { ascending: false }).limit(8),
   ]);
+  const packages = (packagesData ?? []) as Array<{ id: string; name: string; current_version: string | number }>;
+  const patients = (patientsData ?? []) as Array<{ id: string; full_name: string }>;
+  const sales = (salesData ?? []) as Array<{ id: string; sale_reference: string; status: string; total_cents: number; entitlements_released: boolean }>;
 
   return <DashboardShell active="Planos e Pacotes"><PageHeader title="Vender Pacote" description="Fluxo conectado: paciente/lead → pacote → pagamento → contrato pendente → parcelas pendentes → entitlements." />
     <div className="grid gap-3 md:grid-cols-5">{steps.map((s, i) => <Card key={s} className={i === 0 ? "border-primary-500" : ""}><CardContent className="py-4 text-center text-sm">{i + 1}. {s}</CardContent></Card>)}</div>
