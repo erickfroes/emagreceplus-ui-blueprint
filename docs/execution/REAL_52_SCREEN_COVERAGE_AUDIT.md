@@ -70,14 +70,25 @@ Branch: `docs/real-52-screen-coverage-audit`
 - 🟡 **parciais aceitáveis**: 24
 - 🔴 **planejadas**: 0
 
-## Top 10 pendências de maior impacto
-1. Implementar **Modal de Pagamento** reutilizável (`#33`).
-3. Completar fluxo clínico central de **SOAP + Anamnese** (`#10/#11`).
-4. Completar **Relatório do Paciente** aderente ao mapa final (`#52`).
-6. Elevar **Chat Mobile** para LEEF explícito (`#20`).
-7. Criar rota/tela de **Pagamento Modal** integrada ao fluxo de venda (`#33`).
-8. Expandir drag/drop e blocos avançados do **Editor de Documento** (`#27`).
-9. Conectar adapters de validação para **D4Sign Settings** mantendo modo simulado (`#28`).
+## Pendências reais de maior impacto (freeze UI-only)
+1. Explicitar estados LEEF completos em **Chat Mobile** (`#20`).
+2. Harmonizar estados globais da home em **App Paciente** (`#21`).
+3. Evoluir fluxos de modal mobile (**Água/Refeição/Treino/Check-in**) com variações de validação e feedback (`#22/#23/#24/#25`).
+4. Consolidar estados de plano/uso/faturas em **Billing SaaS** (`#29`).
+5. Expandir estados em **Financeiro clínico** (`#31`).
+6. Completar bloco LEEF e fechamento detalhado em **Caixa** (`#34`).
+7. Completar resumo operacional em **Repasses** (`#35`).
+8. Estruturar regras/timeline de cobrança em **Inadimplência** (`#36`).
+9. Completar indicadores e toggles em **Serviços/Pacotes/Criar Pacote/Contrato** (`#37/#38/#39/#41`).
+10. Aprofundar operações de **Estoque/Compras** (bulk actions, filtros avançados, lotes e fornecedor) (`#42/#43/#44/#47`).
+
+## Parciais aceitáveis (freeze aprovado)
+As 24 telas classificadas como **parcial aceitável** permanecem dentro do critério de freeze UI-only: navegação funcional, coerência de UX e mocks tipados.
+
+## Melhorias futuras (pós-freeze)
+- Refinar componentização interna em páginas já funcionais para reduzir lógica inline.
+- Evoluir microinterações (drag/drop avançado, confirmações e feedback contextual).
+- Ampliar cobertura visual de estados para cenários técnicos secundários.
 
 ## Próxima task recomendada
-Executar uma sprint de “**críticos A remanescentes**” focada em `#33`, `#16`, `#52`, `#10/#11` e `#45/#46`, consolidando componentes centrais e LEEF padronizado.
+Executar uma sprint de **refinamento pós-freeze** focada nos parciais aceitáveis de prioridade M para elevar cobertura LEEF e detalhamento operacional sem alterar o escopo UI-only.
