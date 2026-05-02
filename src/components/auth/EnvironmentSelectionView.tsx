@@ -2,11 +2,17 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { ForbiddenState } from "@/components/ui/ForbiddenState";
+import { LoadingState } from "@/components/ui/LoadingState";
 
 type EnvironmentItem = { id: string; clinicName: string; role: string; location: string; status: "ativo" | "inativo" | "simulado" };
 
-export function EnvironmentSelectionView({ items }: { items: EnvironmentItem[] }) {
-  if (!items.length) return <EmptyState title="Ambientes indisponíveis" />;
+export function EnvironmentSelectionView({ items, state = "default" }: { items: EnvironmentItem[]; state?: "default" | "loading" | "empty" | "error" | "forbidden" }) {
+  if (state === "loading") return <LoadingState title="Carregando unidades" />;
+  if (state === "error") return <ErrorState title="Falha ao carregar unidades" />;
+  if (state === "forbidden") return <ForbiddenState title="Acesso bloqueado às unidades" />;
+  if (state === "empty" || !items.length) return <EmptyState title="Ambientes indisponíveis" />;
 
   return (
     <div className="w-full max-w-3xl space-y-3">
