@@ -3,6 +3,11 @@ import type { UiState } from "./common";
 export type NotificationItemStatus = "unread" | "read" | "archived";
 export type NotificationChannel = "in_app" | "email_simulated" | "sms_simulated";
 
+export interface NotificationCta {
+  label: string;
+  href: string;
+}
+
 export interface NotificationItem {
   id: string;
   title: string;
@@ -12,8 +17,15 @@ export interface NotificationItem {
   createdAt: string;
 }
 
-export interface NotificationListDto { state: UiState; items: NotificationItem[] }
-export interface NotificationDetailDto { item: NotificationItem; cta?: { label: string; href: string } }
+export interface NotificationListDto {
+  state: UiState;
+  items: NotificationItem[];
+}
+
+export interface NotificationDetailDto {
+  item: NotificationItem;
+  cta?: NotificationCta;
+}
 
 export type NotificationAction = "mark_as_read" | "archive" | "open_cta";
 export type NotificationModal = "notification_center";

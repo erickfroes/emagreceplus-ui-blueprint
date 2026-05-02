@@ -10,8 +10,15 @@ export interface TenantUnit {
   timezone: string;
 }
 
-export interface TenantListDto { state: UiState; items: TenantUnit[] }
-export interface TenantDetailDto { tenant: TenantUnit; allowedRoles: string[] }
+export interface TenantListDto {
+  state: UiState;
+  items: TenantUnit[];
+}
+
+export interface TenantDetailDto {
+  tenant: TenantUnit;
+  allowedRoles: string[];
+}
 
 export type TenantAction = "switch_unit" | "edit_unit" | "deactivate_unit";
 export type TenantModal = "switch_unit" | "unit_settings";
