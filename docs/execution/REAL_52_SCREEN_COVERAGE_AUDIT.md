@@ -38,8 +38,8 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 24 | Modal Treino | `/app/workouts` | sim | modal em página | sim (`patients`) | parcial | parcial | Estados/validações e variações | M |
 | 25 | Check-in | `/app/checkin` | sim | checkin page | sim (`clinical/patients`) | sim (`clinical/patients`) | parcial | Stepper e sinais clínicos mais ricos | M |
 | 26 | Config Clínica | `/settings/profile` (aprox.) | parcial | `SettingsShell` | parcial | parcial | não explícito | Tela dedicada de configuração clínica | A |
-| 27 | Editor Documento | n/a | não | n/a | não claro | parcial (`documents`) | n/a | Criar rota + editor canvas/template | A |
-| 28 | D4Sign Settings | `/settings/signature` | parcial | ComingSoon | sim (status simulado) | sim (`integrations/documents`) | não explícito | Implementar UI operacional do provider | A |
+| 27 | Editor Documento | `/settings/documents/editor` | sim | editor page (toolbox/canvas/propriedades) | sim (estado UI-only local) | sim (`documents`) | sim | Expandir interações drag/drop no canvas | A |
+| 28 | D4Sign Settings | `/settings/signature` | sim | d4sign settings page (cards/checklist/banner) | sim (status simulado) | sim (`integrations/documents`) | sim | Conectar adapters futuros sem provider real | A |
 | 29 | Billing SaaS | `/settings/billing` | parcial | billing settings page | sim (`finance`) | sim (`finance`) | parcial | Completar plan/usage/invoice states | M |
 | 30 | Analytics | `/reports/executive` (aprox.) | parcial | report views | sim (`reports`) | sim (`reports`) | parcial via ReportStateSection | Falta tela analytics dedicada do mapa | M |
 | 31 | Financeiro | `/finance` | sim | finance dashboard page | sim (`finance`) | sim (`finance`) | parcial | Expandir estados em toda a página | M |
@@ -66,21 +66,21 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 52 | Relatório Paciente | `/patients/[patientId]/report` | parcial | `ReportStateSection` + cards | sim (`reports/patients`) | sim (`reports/patients`) | parcial | Header/tabs/uso serviços/pagamentos completo | A |
 
 ## Totais
-- ✅ **completas**: 16
-- 🟡 **parciais**: 33
-- 🔴 **faltantes**: 3
+- ✅ **completas**: 18
+- 🟡 **parciais**: 31
+- 🔴 **faltantes**: 2
 
 ## Top 10 pendências de maior impacto
-1. Criar **Editor de Documento** real (`#27`).
-2. Implementar **Dossiê de evidência** completo com timeline/hash/eventos (`#16`).
-3. Implementar **Modal de Pagamento** reutilizável (`#33`).
-4. Evoluir **settings de assinatura D4Sign** de ComingSoon para tela operacional (`#28`).
-5. Fechar lacunas dos modais de **Entrada/Saída de Estoque** (`#45/#46`).
-6. Completar fluxo clínico central de **SOAP + Anamnese** (`#10/#11`).
-7. Completar **Relatório do Paciente** aderente ao mapa final (`#52`).
-8. Estruturar **Config Clínica** dedicada e harmonizar rotas/settings (`#26`).
-9. Elevar **Chat Mobile** para LEEF explícito (`#20`).
-10. Criar rota/tela de **Pagamento Modal** integrada ao fluxo de venda (`#33`).
+1. Implementar **Dossiê de evidência** completo com timeline/hash/eventos (`#16`).
+2. Implementar **Modal de Pagamento** reutilizável (`#33`).
+3. Fechar lacunas dos modais de **Entrada/Saída de Estoque** (`#45/#46`).
+4. Completar fluxo clínico central de **SOAP + Anamnese** (`#10/#11`).
+5. Completar **Relatório do Paciente** aderente ao mapa final (`#52`).
+6. Estruturar **Config Clínica** dedicada e harmonizar rotas/settings (`#26`).
+7. Elevar **Chat Mobile** para LEEF explícito (`#20`).
+8. Criar rota/tela de **Pagamento Modal** integrada ao fluxo de venda (`#33`).
+9. Expandir drag/drop e blocos avançados do **Editor de Documento** (`#27`).
+10. Conectar adapters de validação para **D4Sign Settings** mantendo modo simulado (`#28`).
 
 ## Próxima task recomendada
-Executar uma sprint de “**críticos A remanescentes**” focada em `#27`, `#33`, `#28`, `#16` e `#52`, consolidando componentes centrais e LEEF padronizado.
+Executar uma sprint de “**críticos A remanescentes**” focada em `#33`, `#16`, `#52`, `#10/#11` e `#45/#46`, consolidando componentes centrais e LEEF padronizado.
