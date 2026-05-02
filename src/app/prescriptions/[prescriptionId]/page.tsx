@@ -33,7 +33,7 @@ export default function PrescriptionsPage() {
   const doc = prescriptionDocuments[params.prescriptionId];
   const visibleItems = doc ? getVisibleItemsByRole(doc) : [];
   const availableTabs = Array.from(new Set(visibleItems.map((item) => item.tab)));
-  const [activeTab, setActiveTab] = useState<PrescriptionTab>("orientacoes_nutricionais");
+  const [activeTab, setActiveTab] = useState<PrescriptionTab>(availableTabs[0] ?? "orientacoes_nutricionais");
 
   return (
     <DashboardShell active="Pacientes">
@@ -69,7 +69,7 @@ export default function PrescriptionsPage() {
                 ))}
               <div className="flex flex-wrap gap-2">
                 <Button size="sm">Salvar rascunho</Button>
-                <Button size="sm" variant="outline">Gerar documento</Button>
+                <Button size="sm" variant="outline">Gerar documento simulado</Button>
                 <Button size="sm" variant="secondary">Enviar para assinatura simulada</Button>
               </div>
             </CardContent>
@@ -87,7 +87,7 @@ export default function PrescriptionsPage() {
           />
 
           <Card>
-            <CardHeader><CardTitle>Histórico</CardTitle></CardHeader>
+            <CardHeader><CardTitle>Histórico de versões</CardTitle></CardHeader>
             <CardContent className="space-y-2">
               {doc.historico.map((entry) => (
                 <div key={entry.id} className="rounded-xl border border-border p-3 text-sm">
