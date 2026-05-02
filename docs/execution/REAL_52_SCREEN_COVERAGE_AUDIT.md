@@ -82,13 +82,19 @@ Branch: `docs/real-52-screen-coverage-audit`
 9. Completar indicadores e toggles em **Serviços/Pacotes/Criar Pacote/Contrato** (`#37/#38/#39/#41`).
 10. Aprofundar operações de **Estoque/Compras** (bulk actions, filtros avançados, lotes e fornecedor) (`#42/#43/#44/#47`).
 
+> Nota de reconciliação: pendências antes atribuídas a Notificações, Chat Equipe, Editor Documental, D4Sign Settings, Pagamento Modal, modais de estoque e Relatório Paciente foram removidas por estarem concluídas na auditoria atual de 2026-05-02.
+
 ## Parciais aceitáveis (freeze aprovado)
 As 24 telas classificadas como **parcial aceitável** permanecem dentro do critério de freeze UI-only: navegação funcional, coerência de UX e mocks tipados.
+
+### Lista das 24 parciais aceitáveis
+`#1 #2 #3 #5 #7 #20 #21 #22 #23 #24 #25 #29 #31 #34 #35 #36 #37 #38 #39 #41 #42 #43 #44 #47`
 
 ## Melhorias futuras (pós-freeze)
 - Refinar componentização interna em páginas já funcionais para reduzir lógica inline.
 - Evoluir microinterações (drag/drop avançado, confirmações e feedback contextual).
 - Ampliar cobertura visual de estados para cenários técnicos secundários.
+- Tratar as 24 telas parciais como backlog incremental (sem reclassificar freeze aprovado).
 
 ## Próxima task recomendada
 Executar uma sprint de **refinamento pós-freeze** focada nos parciais aceitáveis de prioridade M para elevar cobertura LEEF e detalhamento operacional sem alterar o escopo UI-only.

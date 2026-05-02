@@ -102,8 +102,9 @@ Branch: `docs/ui-only-52-screens-freeze`
 
 ## 8) Consistência com auditoria real
 - Documento reconciliado com `docs/execution/REAL_52_SCREEN_COVERAGE_AUDIT.md` na data de **2026-05-02**.
-- Nenhuma tela permanece como `planejada`; backlog remanescente está classificado como **parcial aceitável** (freeze) vs **melhoria futura** (pós-freeze).
+- Nenhuma tela permanece como `planejada`; backlog remanescente está classificado entre **parciais aceitáveis (24)** e **melhorias futuras** (pós-freeze).
 - Itens antes listados como pendência crítica (Pagamento Modal, SOAP/Anamnese, Relatório Paciente, Notificações, Chat Equipe, Editor Documental, D4Sign Settings e modais de estoque) constam como concluídos no freeze UI-only.
+- Pendências reais restantes concentram-se em 24 telas parciais, sem bloqueio para o freeze v1.
 
 ## 9) Parecer final UI-only
 O escopo de **52 telas UI-only está congelado** para a fase atual: experiência navegável, coerente e apta para validação funcional de produto/UX, com integrações e backend explicitamente planejados para a próxima etapa.
