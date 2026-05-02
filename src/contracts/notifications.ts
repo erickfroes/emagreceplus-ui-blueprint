@@ -1,4 +1,19 @@
-export interface NotificationsContract {
+import type { UiState } from "./common";
+
+export type NotificationItemStatus = "unread" | "read" | "archived";
+export type NotificationChannel = "in_app" | "email_simulated" | "sms_simulated";
+
+export interface NotificationItem {
   id: string;
-  status: "simulated" | "planned";
+  title: string;
+  body: string;
+  status: NotificationItemStatus;
+  channel: NotificationChannel;
+  createdAt: string;
 }
+
+export interface NotificationListDto { state: UiState; items: NotificationItem[] }
+export interface NotificationDetailDto { item: NotificationItem; cta?: { label: string; href: string } }
+
+export type NotificationAction = "mark_as_read" | "archive" | "open_cta";
+export type NotificationModal = "notification_center";
