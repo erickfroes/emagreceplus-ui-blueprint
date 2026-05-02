@@ -3,7 +3,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { createPackageAction } from "./actions";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/ui-only/server";
 
 export default async function NewPackagePage() {
   const supabase = await createClient();

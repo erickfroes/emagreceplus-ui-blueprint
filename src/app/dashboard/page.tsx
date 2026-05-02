@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/ui-only/server";
 
 export default async function DashboardPage() {
   const supabase = await createClient();

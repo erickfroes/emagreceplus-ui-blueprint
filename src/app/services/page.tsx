@@ -1,7 +1,7 @@
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/ui-only/server";
 
 export default async function ServicesPage() {
   const supabase = await createClient();

@@ -1,6 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/ui-only/server";
 
 export async function signInWithPassword(formData: FormData) {
   const email = String(formData.get("email") ?? "");

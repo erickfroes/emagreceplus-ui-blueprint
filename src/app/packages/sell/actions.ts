@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/ui-only/server";
 
 export async function createPackageSaleAction(formData: FormData): Promise<void> {
   const supabase = await createClient();

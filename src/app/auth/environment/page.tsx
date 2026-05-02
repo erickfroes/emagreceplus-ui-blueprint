@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { EnvironmentSelectionView } from "@/components/auth/EnvironmentSelectionView";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/ui-only/server";
 import { selectUnit } from "./actions";
 
 type MembershipRow = {
