@@ -44,7 +44,7 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 30 | Analytics | `/reports/executive` (aprox.) | parcial | report views | sim (`reports`) | sim (`reports`) | parcial via ReportStateSection | Falta tela analytics dedicada do mapa | M |
 | 31 | Financeiro | `/finance` | sim | finance dashboard page | sim (`finance`) | sim (`finance`) | parcial | Expandir estados em toda a página | M |
 | 32 | Contas Receber | `/finance/receivables` | sim | receivables page | sim (`finance`) | sim (`finance`) | sim (via `UiStateView`) | Aprofundar ações de cobrança | B |
-| 33 | Pagamento Modal | n/a | não | n/a | parcial (`finance/packages`) | sim (`finance/packages`) | n/a | Criar modal de pagamento reutilizável | A |
+| 33 | Pagamento Modal | `/finance` + `/finance/receivables` | sim | `PaymentRegistrationModal` reutilizável + `ConfirmDialog` | sim (`finance`) | sim (`finance`) | sim (validação visual + confirmação) | Concluído em UI-only com auditoria simulada | A |
 | 34 | Caixa | `/finance/cash-register` | parcial | cash register page | sim (`finance`) | sim (`finance`) | parcial | Falta bloco LEEF + fechamento detalhado | M |
 | 35 | Repasses | `/finance/payouts` | parcial | payouts page | sim (`finance`) | sim (`finance`) | parcial | Completar resumo por profissional | M |
 | 36 | Inadimplência | `/finance/overdue` | parcial | overdue page | sim (`finance`) | sim (`finance`) | parcial | Regras/timeline de cobrança | M |
