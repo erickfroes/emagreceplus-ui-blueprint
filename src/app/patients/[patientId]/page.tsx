@@ -2,21 +2,23 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { ForbiddenState } from "@/components/ui/ForbiddenState";
+import { LoadingState } from "@/components/ui/LoadingState";
 import { Tabs } from "@/components/ui/Tabs";
 import type { PatientDetail, UIState } from "@/data/mock/patients";
 import { mockDataProvider } from "@/services/mock-data-provider";
+import { resolveUiState } from "@/data/mock/ui-states";
 
 const tabItems = [
   { id: "resumo", label: "Resumo" },
   { id: "metas", label: "Metas" },
   { id: "timeline", label: "Timeline" },
 ];
-
-const pageState: UIState = "default";
 
 function PatientPanels({ detail, tab }: { detail: PatientDetail; tab: string }) {
   if (tab === "resumo") {
@@ -66,6 +68,8 @@ function PatientPanels({ detail, tab }: { detail: PatientDetail; tab: string }) 
 export default function Patient360Page() {
   const [tab, setTab] = useState("resumo");
   const params = useParams<{ patientId: string }>();
+  const searchParams = useSearchParams();
+  const pageState = resolveUiState(searchParams.get("state") ?? undefined) as UIState;
   const [detail, setDetail] = useState<PatientDetail | null | undefined>(undefined);
 
   useEffect(() => {
@@ -77,9 +81,9 @@ export default function Patient360Page() {
       <h1 className="text-2xl font-semibold text-slate-950">Paciente 360</h1>
       <p className="mb-4 mt-1 text-sm text-muted-foreground">Visão centralizada do cuidado e evolução clínica.</p>
 
-      {pageState === "loading" || detail === undefined ? <p className="text-sm text-muted-foreground">Carregando perfil do paciente...</p> : null}
-      {pageState === "error" ? <p className="text-sm text-danger">Erro ao carregar dados do paciente.</p> : null}
-      {pageState === "forbidden" ? <p className="text-sm text-danger">Você não tem permissão para acessar este perfil.</p> : null}
+      {pageState === "loading" || detail === undefined ? <LoadingState title="Carregando perfil do paciente" /> : null}
+      {pageState === "error" ? <ErrorState title="Erro ao carregar dados do paciente" /> : null}
+      {pageState === "forbidden" ? <ForbiddenState title="Você não tem permissão para acessar este perfil" /> : null}
       {pageState === "empty" ? <EmptyState title="Sem dados clínicos" description="Nenhum dado de acompanhamento disponível." /> : null}
 
       {pageState === "default" ? (

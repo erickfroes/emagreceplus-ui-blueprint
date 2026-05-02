@@ -2,11 +2,20 @@ import { notFound } from "next/navigation";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { ForbiddenState } from "@/components/ui/ForbiddenState";
+import { LoadingState } from "@/components/ui/LoadingState";
 import { InventoryMovementActions } from "@/components/inventory/InventoryMovementActions";
-import { inventoryItems, isExpired } from "@/data/mock/inventory";
+import { inventoryItems, isExpired, resolveInventoryUiState } from "@/data/mock/inventory";
 
-export default async function InventoryItemDetailPage({ params }: { params: Promise<{ itemId: string }> }) {
+export default async function InventoryItemDetailPage({ params, searchParams }: { params: Promise<{ itemId: string }>; searchParams?: Promise<{ state?: string }> }) {
+  const state = resolveInventoryUiState((await searchParams)?.state);
   const { itemId } = await params;
+  if (state === "loading") return <DashboardShell active="Estoque"><LoadingState title="Carregando item de estoque" /></DashboardShell>;
+  if (state === "empty") return <DashboardShell active="Estoque"><EmptyState title="Item sem dados" description="Nenhum dado do item foi encontrado para este cenário simulado." /></DashboardShell>;
+  if (state === "error") return <DashboardShell active="Estoque"><ErrorState title="Falha ao carregar item de estoque" /></DashboardShell>;
+  if (state === "forbidden") return <DashboardShell active="Estoque"><ForbiddenState title="Acesso negado ao item de estoque" /></DashboardShell>;
   const item = inventoryItems.find((i) => i.id === itemId);
   if (!item) return notFound();
   const expired = isExpired(item.validade);

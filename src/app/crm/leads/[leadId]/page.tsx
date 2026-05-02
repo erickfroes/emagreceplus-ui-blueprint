@@ -3,12 +3,22 @@ import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Badge } from "@/components/ui/Badge";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { ForbiddenState } from "@/components/ui/ForbiddenState";
+import { LoadingState } from "@/components/ui/LoadingState";
+import { resolveUiState } from "@/data/mock/ui-states";
 import { crmLeads } from "@/data/mock/crm";
 
-export default async function LeadDetailPage({ params }: { params: Promise<{ leadId: string }> }) {
+export default async function LeadDetailPage({ params, searchParams }: { params: Promise<{ leadId: string }>; searchParams?: Promise<{ state?: string }> }) {
   const { leadId } = await params;
+  const pageState = resolveUiState((await searchParams)?.state);
   const lead = crmLeads.find((item) => item.id === leadId);
 
+  if (pageState === "loading") return <DashboardShell active="CRM"><LoadingState title="Carregando lead" /></DashboardShell>;
+  if (pageState === "empty") return <DashboardShell active="CRM"><EmptyState title="Lead sem dados" description="Este registro não possui detalhes adicionais no mock atual." /></DashboardShell>;
+  if (pageState === "error") return <DashboardShell active="CRM"><ErrorState title="Falha ao carregar lead" /></DashboardShell>;
+  if (pageState === "forbidden") return <DashboardShell active="CRM"><ForbiddenState title="Acesso negado ao lead" /></DashboardShell>;
   if (!lead) notFound();
 
   return (

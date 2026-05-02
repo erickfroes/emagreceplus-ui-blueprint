@@ -2,8 +2,18 @@ import { Bell, Calendar, CheckCircle2, Droplets, Dumbbell, Salad } from "lucide-
 import { MobileAppShell } from "@/components/layout/MobileAppShell";
 import { Card } from "@/components/ui/Card";
 import { StatePreview } from "@/components/patient-mobile/StatePreview";
+import { resolveUiState } from "@/data/mock/ui-states";
+import { LoadingState } from "@/components/ui/LoadingState";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { ForbiddenState } from "@/components/ui/ForbiddenState";
 
-export default function MobilePatientDashboardPage() {
+export default async function MobilePatientDashboardPage({ searchParams }: { searchParams?: Promise<{ state?: string }> }) {
+  const state = resolveUiState((await searchParams)?.state);
+  if (state === "loading") return <MobileAppShell active="Início"><LoadingState title="Carregando app do paciente" /></MobileAppShell>;
+  if (state === "empty") return <MobileAppShell active="Início"><EmptyState title="Sem dados do app" description="Ainda não existem registros para seu painel inicial." /></MobileAppShell>;
+  if (state === "error") return <MobileAppShell active="Início"><ErrorState title="Falha ao carregar app do paciente" /></MobileAppShell>;
+  if (state === "forbidden") return <MobileAppShell active="Início"><ForbiddenState title="Acesso restrito ao app do paciente" /></MobileAppShell>;
   const actions = [
     { icon: Droplets, label: "Água", value: "1,8L" },
     { icon: Salad, label: "Refeições", value: "3 de 5" },
