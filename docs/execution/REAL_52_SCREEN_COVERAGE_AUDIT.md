@@ -29,8 +29,8 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 15 | Detalhe Documento | `/documents/[documentId]` | sim | document detail view | sim (`documents`) | sim (`documents`) | sim | Expandir audit timeline visual | M |
 | 16 | Dossiê de evidência | `/documents/[documentId]/evidence` | parcial | evidence view | sim (`documents`) | sim (`documents`) | sim textual | Estruturar hash/eventos/timeline completos | A |
 | 17 | Health Documental | `/documents/ops/health` | sim | ops health view | sim (`documents`) | sim (`documents`) | sim textual | Melhorar gráficos operacionais | M |
-| 18 | Notificações | n/a | não | n/a | sim (`notifications`) | sim (`notifications`) | n/a | Criar rota e UI de NotificationTabs/Card | A |
-| 19 | Chat Equipe | n/a (somente `/app/chat` mobile) | parcial | `app/chat` | sim (`chat`) | sim (`chat`) | parcial | Falta versão equipe desktop com contexto paciente | A |
+| 18 | Notificações | `/notifications` | sim | `NotificationsView` | sim (`notifications`) | sim (`notifications`) | sim | — | A |
+| 19 | Chat Equipe | `/chat` | sim | `StaffChatView` | sim (`chat`) | sim (`chat`) | sim | — | A |
 | 20 | Chat Mobile | `/app/chat` | sim | mobile chat page | sim (`chat`) | sim (`chat`) | parcial | Estados LEEF explícitos | M |
 | 21 | App Paciente | `/app` | sim | `MobileAppShell` | sim (`patients/reports`) | sim (`patients`) | parcial | Cobrir estados globais da home mobile | M |
 | 22 | Modal Água | `/app/water` | sim | modal em página | sim (`patients`) | parcial | parcial | Transformar em bottom-sheet real + LEEF | M |
@@ -66,21 +66,21 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 52 | Relatório Paciente | `/patients/[patientId]/report` | parcial | `ReportStateSection` + cards | sim (`reports/patients`) | sim (`reports/patients`) | parcial | Header/tabs/uso serviços/pagamentos completo | A |
 
 ## Totais
-- ✅ **completas**: 14
-- 🟡 **parciais**: 34
-- 🔴 **faltantes**: 4
+- ✅ **completas**: 16
+- 🟡 **parciais**: 33
+- 🔴 **faltantes**: 3
 
 ## Top 10 pendências de maior impacto
-1. Criar rota e tela de **Notificações** (`#18`).
-2. Criar **Editor de Documento** real (`#27`).
-3. Implementar **Dossiê de evidência** completo com timeline/hash/eventos (`#16`).
-4. Criar **Chat Equipe desktop** (separado de chat mobile) (`#19`).
-5. Implementar **Modal de Pagamento** reutilizável (`#33`).
-6. Evoluir **settings de assinatura D4Sign** de ComingSoon para tela operacional (`#28`).
-7. Fechar lacunas dos modais de **Entrada/Saída de Estoque** (`#45/#46`).
-8. Completar fluxo clínico central de **SOAP + Anamnese** (`#10/#11`).
-9. Completar **Relatório do Paciente** aderente ao mapa final (`#52`).
-10. Estruturar **Config Clínica** dedicada e harmonizar rotas/settings (`#26`).
+1. Criar **Editor de Documento** real (`#27`).
+2. Implementar **Dossiê de evidência** completo com timeline/hash/eventos (`#16`).
+3. Implementar **Modal de Pagamento** reutilizável (`#33`).
+4. Evoluir **settings de assinatura D4Sign** de ComingSoon para tela operacional (`#28`).
+5. Fechar lacunas dos modais de **Entrada/Saída de Estoque** (`#45/#46`).
+6. Completar fluxo clínico central de **SOAP + Anamnese** (`#10/#11`).
+7. Completar **Relatório do Paciente** aderente ao mapa final (`#52`).
+8. Estruturar **Config Clínica** dedicada e harmonizar rotas/settings (`#26`).
+9. Elevar **Chat Mobile** para LEEF explícito (`#20`).
+10. Criar rota/tela de **Pagamento Modal** integrada ao fluxo de venda (`#33`).
 
 ## Próxima task recomendada
-Executar uma sprint de “**rotas faltantes e críticos A**” focada em `#18`, `#27`, `#33`, `#19` e `#28`, criando primeiro os shells/rotas com LEEF padronizado e, em seguida, os componentes principais previstos no mapa.
+Executar uma sprint de “**críticos A remanescentes**” focada em `#27`, `#33`, `#28`, `#16` e `#52`, consolidando componentes centrais e LEEF padronizado.

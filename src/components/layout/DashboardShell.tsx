@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BellRing, Calendar, ClipboardList, FileText, Home, Package, Settings, Stethoscope, Users, Wallet, Warehouse } from "lucide-react";
+import { BellRing, Calendar, ClipboardList, FileText, Home, MessageSquare, Package, Settings, Stethoscope, Users, Wallet, Warehouse } from "lucide-react";
 import { Sidebar, type SidebarItem } from "@/components/layout/Sidebar";
 import { SupportCard } from "@/components/layout/SupportCard";
 import { Topbar } from "@/components/layout/Topbar";
@@ -15,6 +15,7 @@ const dashboardMenu: SidebarItem[] = [
   { label: "Estoque", icon: Warehouse, href: "/inventory" },
   { label: "Planos e Pacotes", icon: Package, href: "/packages" },
   { label: "Notificações", icon: BellRing, href: "/notifications" },
+  { label: "Mensagens", icon: MessageSquare, href: "/chat" },
   { label: "Relatórios", icon: ClipboardList, href: "/reports" },
   { label: "Configurações", icon: Settings, href: "/settings/profile" },
 ];
