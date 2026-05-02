@@ -56,8 +56,8 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 42 | Estoque Dashboard | `/inventory` | sim | inventory dashboard page | sim (`inventory`) | sim (`inventory`) | parcial (via state blocks) | Expandir card crítico e tendências | M |
 | 43 | Itens Estoque | `/inventory/items` | sim | inventory items page | sim (`inventory`) | sim (`inventory`) | parcial (state block) | Bulk actions e filtros avançados | M |
 | 44 | Detalhe Item | `/inventory/items/[itemId]` | sim | item detail page | sim (`inventory`) | sim (`inventory`) | parcial | Completar lotes e ações operacionais | M |
-| 45 | Entrada Estoque | modal em `/inventory/items/[itemId]` | parcial | `StockMovementModalMock` | sim (`inventory`) | sim (`inventory`) | parcial | Modal dedicado com upload NF/lotes | A |
-| 46 | Saída Estoque | modal em `/inventory/items/[itemId]` | parcial | `StockMovementModalMock` | sim (`inventory`) | sim (`inventory`) | parcial | Modal dedicado com guards/contexto atendimento | A |
+| 45 | Entrada Estoque | modal em `/inventory/items` e `/inventory/items/[itemId]` | completa | `StockEntryModal` + `ConfirmDialog` | sim (`inventory`) | sim (`inventory`) | sim | Concluída com campos completos, toggle de novo lote, upload visual de nota e aviso de auditoria | A |
+| 46 | Saída Estoque | modal em `/inventory/items` e `/inventory/items/[itemId]` | completa | `StockOutputModal` + `ConfirmDialog` | sim (`inventory`) | sim (`inventory`) | sim | Concluída com motivos padronizados, vínculo opcional com atendimento/paciente e bloqueio visual por saldo | A |
 | 47 | Compras | `/purchases` | parcial | purchases page | sim (`inventory`) | sim (`inventory`) | parcial | Tabs/painel fornecedor mais completos | M |
 | 48 | Relatórios Financeiros | `/reports/finance` | sim | report page + toolbar | sim (`reports`) | sim (`reports`) | parcial (state section) | Consolidar tabela por unidade | B |
 | 49 | Relatórios Pacotes | `/reports/packages` | sim | report page + charts | sim (`reports/packages`) | sim (`reports/packages`) | parcial (state section) | Ajustes de funil/performance | B |
@@ -66,13 +66,12 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 52 | Relatório Paciente | `/patients/[patientId]/report` | completa | header + tabs + KPIs + tabelas + alertas | sim (`patient-report`) | sim (`patient-report`) | sim | Concluída com visão financeira, serviços, documentos e adesão | A |
 
 ## Totais
-- ✅ **completas**: 25
-- 🟡 **parciais**: 24
+- ✅ **completas**: 27
+- 🟡 **parciais**: 22
 - 🔴 **faltantes**: 2
 
 ## Top 10 pendências de maior impacto
 1. Implementar **Modal de Pagamento** reutilizável (`#33`).
-2. Fechar lacunas dos modais de **Entrada/Saída de Estoque** (`#45/#46`).
 3. Completar fluxo clínico central de **SOAP + Anamnese** (`#10/#11`).
 4. Completar **Relatório do Paciente** aderente ao mapa final (`#52`).
 5. Estruturar **Config Clínica** dedicada e harmonizar rotas/settings (`#26`).
