@@ -23,7 +23,10 @@ export default function ReceivablesPage() {
       <Card><CardHeader><CardTitle>Lançamentos pendentes</CardTitle></CardHeader><CardContent className="space-y-3">
         {receivables.map((item) => <div key={item.id} className="space-y-2 rounded-2xl border p-4"><div className="flex items-center justify-between"><div><p className="font-semibold">{item.patient}</p><p className="text-sm text-slate-500">{item.service} • vence em {item.dueDate}</p></div><div className="text-right"><p>{item.amount}</p><Badge tone="warning">{item.status}</Badge></div></div>
           <p className="text-xs text-slate-500">Cobrança: {item.allowedBillingTypes.map((type) => billingLabels[type]).join(" / ")} • ref {item.externalReference}</p>
-          <Button variant="outline" onClick={() => { setSelectedReceivableId(item.id); setOpen(true); }}>Registrar pagamento desta cobrança</Button>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" onClick={() => { setSelectedReceivableId(item.id); setOpen(true); }}>Registrar pagamento desta cobrança</Button>
+            <Button variant="ghost" onClick={() => { setSelectedReceivableId(item.id); setOpen(true); }}>Ações da linha: registrar pagamento</Button>
+          </div>
         </div>)}
         <div className="flex gap-2"><Button onClick={() => setOpen(true)}>Registrar pagamento</Button><Button variant="outline" onClick={() => setConfirm(true)}>Confirmar baixa em lote</Button></div>
         <p className="text-xs text-slate-500">Fluxo Asaas em modo <strong>{asaasIntegrationPlan.status}</strong>. Sem chave no browser, webhook idempotente e sem baixa dupla.</p>
@@ -33,13 +36,14 @@ export default function ReceivablesPage() {
     {selectedReceivable ? <PaymentRegistrationModal
       open={open}
       onClose={() => setOpen(false)}
-      receivable={{
+        receivable={{
         id: selectedReceivable.id,
         patient: selectedReceivable.patient,
         description: selectedReceivable.service,
-        openAmount: Number(selectedReceivable.amount.replace(/[R$ .]/g, "").replace(",", ".")),
+        originalAmount: selectedReceivable.originalAmount,
+        openAmount: selectedReceivable.openAmount,
       }}
-      canSendReceiptToPatient
+      canSendReceiptToPatient={false}
     /> : null}
 
     <ConfirmDialog open={confirm} title="Confirmar ação crítica" description="Deseja marcar os itens selecionados como pagos?" confirmLabel="Sim, confirmar" onCancel={() => setConfirm(false)} onConfirm={() => setConfirm(false)} />

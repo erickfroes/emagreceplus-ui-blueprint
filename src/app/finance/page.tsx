@@ -25,7 +25,8 @@ export default function FinancePage() {
         id: receivable.id,
         patient: receivable.patient,
         description: receivable.service,
-        openAmount: Number(receivable.amount.replace(/[R$ .]/g, "").replace(",", ".")),
+        originalAmount: receivable.originalAmount,
+        openAmount: receivable.openAmount,
       }}
       canSendReceiptToPatient={false}
     />

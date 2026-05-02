@@ -18,8 +18,8 @@ export const financeKpis = [
 ];
 
 export const receivables = [
-  { id: "REC-1044", patient: "Aline Costa", service: "Pacote Vital 90 dias", dueDate: "2026-05-12", amount: "R$ 890,00", status: "Pendente" as ReceivableStatus, externalReference: "invoice_rec_1044", allowedBillingTypes: ["PIX", "BOLETO", "CREDIT_CARD"] as BillingType[] },
-  { id: "REC-1045", patient: "Marcos Freitas", service: "Consulta retorno", dueDate: "2026-05-14", amount: "R$ 320,00", status: "Vencendo" as ReceivableStatus, externalReference: "invoice_rec_1045", allowedBillingTypes: ["PIX", "BOLETO"] as BillingType[] },
+  { id: "REC-1044", patient: "Aline Costa", service: "Pacote Vital 90 dias", dueDate: "2026-05-12", originalAmount: 890, openAmount: 890, amount: "R$ 890,00", status: "Pendente" as ReceivableStatus, externalReference: "invoice_rec_1044", allowedBillingTypes: ["PIX", "BOLETO", "CREDIT_CARD"] as BillingType[] },
+  { id: "REC-1045", patient: "Marcos Freitas", service: "Consulta retorno", dueDate: "2026-05-14", originalAmount: 420, openAmount: 320, amount: "R$ 320,00", status: "Vencendo" as ReceivableStatus, externalReference: "invoice_rec_1045", allowedBillingTypes: ["PIX", "BOLETO"] as BillingType[] },
 ];
 
 export const webhookEvents = [
