@@ -1,6 +1,6 @@
 # UX Final Review — EmagrecePlus UI-only
 
-Data da revisão: **2026-05-01**
+Data da revisão: **2026-05-02**
 
 ## Escopo validado
 - Revisão das rotas em `src/app/**/page.tsx`.
@@ -81,15 +81,24 @@ Observação:
 - Não foram encontrados secrets reais hardcoded na UI.
 - Menções a `service_role` aparecem em documentação de planejamento, não em uso runtime de frontend.
 
+## Status dos itens reconciliados nesta etapa
+- **Notificações (`/notifications`)**: concluído no freeze, com `NotificationsView` e estados visuais disponíveis.
+- **Chat equipe (`/chat`)**: concluído no freeze, com `StaffChatView` e estrutura de thread/composer.
+- **Editor documental (`/settings/documents/editor`)**: concluído no freeze UI-only; melhorias remanescentes são incrementais de interação.
+- **D4Sign settings (`/settings/signature`)**: concluído em modo simulado/não configurado, sem integração real.
+- **Pagamento modal (`/finance` e `/finance/receivables`)**: concluído no freeze com componente reutilizável `PaymentRegistrationModal`.
+- **Modais de estoque (`/inventory/items` e `/inventory/items/[itemId]`)**: concluídos no freeze com `StockEntryModal` e `StockOutputModal`.
+- **Relatório do paciente (`/patients/[patientId]/report`)**: concluído no freeze com abas, KPIs e tabelas principais.
+
 ## Problemas encontrados
-1. Link de configurações para billing sem página correspondente (`/settings/billing`).
-2. Inconsistências pontuais de links de settings no menu vs páginas atualmente implementadas (pendência de harmonização de rotas).
+1. Não há pendências críticas de freeze para notifications, chat equipe, editor documental, D4Sign settings, pagamento modal, modais de estoque e relatório do paciente.
+2. Permanecem ajustes incrementais em telas parciais de settings para harmonização fina de rotas/estados.
 
 ## Correções feitas
-1. Criação da página `src/app/settings/billing/page.tsx` com `SettingsShell` e conteúdo explícito de billing SaaS simulado.
+1. Reconciliação documental dos status finais no pacote UX/UI-only v1, removendo pendências já concluídas e mantendo apenas melhorias reais remanescentes.
 
 ## Pendências para freeze
-1. Harmonizar itens de menu de settings com rotas efetivamente existentes (units/team/permissions/documents/digital-signature/integrations/audit-logs).
+1. Harmonizar navegação e cobertura de estado nas rotas de settings ainda parciais (ex.: units/team/permissions/integrations/audit-logs) sem expandir escopo para backend.
 2. Se desejado, formalizar cobertura LEEF também para páginas de suporte técnico (ex.: design-system) via bloco padrão.
 
 ## Parecer final
