@@ -21,8 +21,8 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 7 | Paciente 360 | `/patients/[patientId]` | parcial | `PatientDetail` + `Tabs` | sim (`patients/clinical`) | sim (`patients/clinical`) | sim | Completar blocos 360 (timeline/alertas) | M |
 | 8 | Agenda | `/schedule` | sim | agenda em `page.tsx` | sim (`scheduling`) | sim (`scheduling`) | sim | Componentização fina (CalendarGrid/QueuePanel) | M |
 | 9 | Fila | `/queue` | sim | fila em `page.tsx` | sim (`scheduling`) | sim (`scheduling`) | sim | KPIs de espera dedicados | B |
-| 10 | SOAP | `/encounters/[encounterId]` | parcial | encounter view | sim (`encounters/clinical`) | sim (`clinical`) | sim | Editor SOAP dedicado e barra fixa | A |
-| 11 | Anamnese | `/encounters/[encounterId]/anamnesis` | parcial | anamnese em `page.tsx` | sim (`encounters/clinical`) | sim (`clinical`) | sim | Stepper/resumo em tempo real | A |
+| 10 | SOAP | `/encounters/[encounterId]` | completa | `SoapEditor` + `EncounterContextPanel` + `EncounterActionBar` | sim (`encounters/clinical`) | sim (`clinical`) | sim | Concluída com header de paciente, abas SOAP, painel clínico e barra fixa | A |
+| 11 | Anamnese | `/encounters/[encounterId]/anamnesis` | completa | stepper + resumo em tempo real + sinais de atenção | sim (`encounters/clinical`) | sim (`clinical`) | sim | Concluída com 7 seções, botões de navegação e tooltip para siglas | A |
 | 12 | Plano Alimentar | `/nutrition/plans/[patientId]` | parcial | plan view | sim (`nutrition`) | sim (`nutrition`) | sim | Builder completo (MealCard/MacroChart) | A |
 | 13 | Prescrições | `/prescriptions/[prescriptionId]` | parcial | prescription view | sim (`prescriptions`) | sim (`prescriptions`) | sim | Histórico/preview avançado | A |
 | 14 | Centro Documental | `/documents` | sim | documents list view | sim (`documents`) | sim (`documents`) | sim | Consolidar filtros/KPIs dedicados | M |
@@ -66,8 +66,8 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 52 | Relatório Paciente | `/patients/[patientId]/report` | parcial | `ReportStateSection` + cards | sim (`reports/patients`) | sim (`reports/patients`) | parcial | Header/tabs/uso serviços/pagamentos completo | A |
 
 ## Totais
-- ✅ **completas**: 19
-- 🟡 **parciais**: 30
+- ✅ **completas**: 21
+- 🟡 **parciais**: 28
 - 🔴 **faltantes**: 2
 
 ## Top 10 pendências de maior impacto
