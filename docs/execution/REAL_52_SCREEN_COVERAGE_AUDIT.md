@@ -51,7 +51,7 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 37 | Serviços | `/services` | parcial | services page | sim (`packages/finance`) | sim (`packages/finance`) | parcial | Integration toggles e detalhes de serviço | M |
 | 38 | Pacotes | `/packages` | parcial | packages list page | sim (`packages`) | sim (`packages`) | parcial | Grid/tabs com indicadores completos | M |
 | 39 | Criar Pacote | `/packages/new` | parcial | package form page | sim (`packages`) | sim (`packages`) | parcial | Completar toggles de acesso/margem | M |
-| 40 | Vender Pacote | `/packages/sell` | parcial | sell flow page | sim (`packages`) | sim (`packages`) | parcial | Stepper completo de venda/pagamento | A |
+| 40 | Vender Pacote | `/packages/sell` | completa | fluxo de venda com stepper + resumo lateral | sim (`package-sale`) | sim (`package-sale`) | sim | Concluída com pagamento/contrato/assinatura/cobranças simuladas | A |
 | 41 | Contrato Pacote | `/contracts/[contractId]` | parcial | contract view page | sim (`packages/documents`) | sim (`packages/documents`) | parcial | Preview/checklist/ações de contrato | M |
 | 42 | Estoque Dashboard | `/inventory` | sim | inventory dashboard page | sim (`inventory`) | sim (`inventory`) | parcial (via state blocks) | Expandir card crítico e tendências | M |
 | 43 | Itens Estoque | `/inventory/items` | sim | inventory items page | sim (`inventory`) | sim (`inventory`) | parcial (state block) | Bulk actions e filtros avançados | M |
@@ -63,11 +63,11 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 49 | Relatórios Pacotes | `/reports/packages` | sim | report page + charts | sim (`reports/packages`) | sim (`reports/packages`) | parcial (state section) | Ajustes de funil/performance | B |
 | 50 | Relatórios Estoque | `/reports/inventory` | sim | report page + charts | sim (`reports/inventory`) | sim (`reports/inventory`) | parcial (state section) | Completar KPIs de consumo | B |
 | 51 | Visão Executiva | `/reports/executive` | sim | executive report page | sim (`reports`) | sim (`reports`) | parcial (state section) | Consolidar alertas estratégicos tabela | B |
-| 52 | Relatório Paciente | `/patients/[patientId]/report` | parcial | `ReportStateSection` + cards | sim (`reports/patients`) | sim (`reports/patients`) | parcial | Header/tabs/uso serviços/pagamentos completo | A |
+| 52 | Relatório Paciente | `/patients/[patientId]/report` | completa | header + tabs + KPIs + tabelas + alertas | sim (`patient-report`) | sim (`patient-report`) | sim | Concluída com visão financeira, serviços, documentos e adesão | A |
 
 ## Totais
-- ✅ **completas**: 23
-- 🟡 **parciais**: 26
+- ✅ **completas**: 25
+- 🟡 **parciais**: 24
 - 🔴 **faltantes**: 2
 
 ## Top 10 pendências de maior impacto
