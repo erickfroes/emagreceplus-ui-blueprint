@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { MealCard } from "@/components/nutrition/MealCard";
-import { MacroSummary } from "@/components/nutrition/MacroSummary";
+import { MacroSummaryCard } from "@/components/nutrition/MacroSummaryCard";
 import { NutritionPlanPreview } from "@/components/nutrition/NutritionPlanPreview";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
@@ -34,7 +34,7 @@ export default function NutritionPlanPage() {
             <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">Objetivo: {plan.objetivo}</p>
               <p className="text-sm text-muted-foreground">Válido até: {plan.validade}</p>
-              <MacroSummary kcal={plan.kcal} proteinPct={plan.macroSplit.proteinPct} carbPct={plan.macroSplit.carbPct} fatPct={plan.macroSplit.fatPct} />
+              <MacroSummaryCard kcal={plan.kcal} proteinPct={plan.macroSplit.proteinPct} carbPct={plan.macroSplit.carbPct} fatPct={plan.macroSplit.fatPct} />
               <div className="grid gap-3">{plan.itens.map((item) => <MealCard key={item.id} item={item} />)}</div>
               <div className="flex flex-wrap gap-2">
                 <Button size="sm">Salvar rascunho</Button>
@@ -47,7 +47,7 @@ export default function NutritionPlanPage() {
           <Card>
             <CardHeader><CardTitle>Histórico e modelos</CardTitle></CardHeader>
             <CardContent className="space-y-2">
-              {plan.historico.map((item) => (
+              <div className="flex flex-wrap gap-2 pb-2"><Button size="sm" variant="outline">Copiar plano anterior</Button><Button size="sm" variant="outline">Modelos</Button><Button size="sm" variant="secondary">Enviar ao paciente (simulado)</Button></div>{plan.historico.map((item) => (
                 <div key={item.id} className="rounded-xl border border-border p-3 text-sm">
                   <p className="font-medium text-slate-900">{item.nome}</p>
                   <p className="text-muted-foreground">{item.data} • status: {item.status}</p>

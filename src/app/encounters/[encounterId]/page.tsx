@@ -1,5 +1,5 @@
 import { EncounterActionBar } from "@/components/clinical/EncounterActionBar";
-import { EncounterContextPanel } from "@/components/clinical/EncounterContextPanel";
+import { ClinicalContextPanel } from "@/components/clinical/ClinicalContextPanel";
 import { SoapEditor } from "@/components/clinical/SoapEditor";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -28,7 +28,7 @@ export default async function EncounterPage({ params }: Props) {
       {pageState === "default" && soap ? (
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
           <SoapEditor encounterId={encounterId} soap={soap} />
-          <EncounterContextPanel alerts={soap.clinicalContext.alerts} metadata={soap.clinicalContext.metadata} />
+          <ClinicalContextPanel alerts={soap.clinicalContext.alerts} metadata={soap.clinicalContext.metadata} evolutionNotes={["Último retorno com melhor adesão alimentar.", "Sono em monitoramento por oscilação semanal."]} pendingDocuments={["Assinatura do termo de acompanhamento nutricional (simulado).", "Checklist de diário alimentar da semana atual."]} />
         </div>
       ) : null}
 
