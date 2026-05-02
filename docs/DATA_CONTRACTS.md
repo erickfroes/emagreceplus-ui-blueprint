@@ -19,25 +19,27 @@ Contratos TypeScript dos domínios principais para sustentar as 52 telas com moc
 - `crm.ts`
 - `patients.ts`
 
-## Padrão adotado por domínio
+## Estrutura padrão por domínio
 
-Cada domínio define:
-1. **Tipos principais** (entidades do domínio).
-2. **Enums de status** (como unions de string).
+Cada domínio passou a expor um contrato consistente com:
+1. **Tipos principais** das entidades.
+2. **Enums de status** (string unions).
 3. **DTOs de listagem e detalhe**.
-4. **Tipos de actions e modals**.
-5. **UiState** aplicado em DTOs de listagem.
-6. **Sem uso de `any`**.
+4. **Tipos de actions/modals** para fluxos de UI.
+5. **UiState** aplicado em listagem e, quando relevante, **estado de tela** (`*UiState`).
+6. **Sem `any`**.
 
 ## Estados de UI
 
-Todos os DTOs de listagem usam `UiState` de `src/contracts/common.ts`, suportando:
+Todos os DTOs de listagem usam `UiState` de `src/contracts/common.ts`:
 - `default`
 - `loading`
 - `empty`
 - `error`
 - `forbidden`
 
-## Export central
+## Observações de integração
 
-Todos os contratos são exportados em `src/contracts/index.ts` para consumo unificado.
+- Contratos seguem o escopo **UI-only**, sem backend real.
+- Providers externos permanecem simulados/não configurados (ex.: assinatura digital).
+- Export central mantido em `src/contracts/index.ts`.

@@ -3,6 +3,12 @@ import type { UiState } from "./common";
 export type PrescriptionItemStatus = "draft" | "issued" | "updated" | "canceled";
 export type PrescriptionType = "supplement" | "exam" | "guidance";
 
+export interface PrescriptionEntry {
+  id: string;
+  label: string;
+  instructions: string;
+}
+
 export interface PrescriptionItem {
   id: string;
   patientId: string;
@@ -11,8 +17,15 @@ export interface PrescriptionItem {
   createdAt: string;
 }
 
-export interface PrescriptionListDto { state: UiState; items: PrescriptionItem[] }
-export interface PrescriptionDetailDto { item: PrescriptionItem; entries: { id: string; label: string; instructions: string }[] }
+export interface PrescriptionListDto {
+  state: UiState;
+  items: PrescriptionItem[];
+}
+
+export interface PrescriptionDetailDto {
+  item: PrescriptionItem;
+  entries: PrescriptionEntry[];
+}
 
 export type PrescriptionAction = "issue" | "edit" | "cancel" | "print";
 export type PrescriptionModal = "prescription_editor" | "confirm_cancel";
