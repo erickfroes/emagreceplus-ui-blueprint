@@ -1,109 +1,87 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { ForbiddenState } from "@/components/ui/ForbiddenState";
+import { LoadingState } from "@/components/ui/LoadingState";
 import {
   documentCenterItems,
   evidenceDossierStateByDocumentId,
-  evidenceEventsByDocumentId,
   evidencePackageByDocumentId,
-  providerEventsByDocumentId,
   signersByDocumentId,
   timelineByDocumentId,
-  type DocumentsUiState,
+  trailEventsByDocumentId,
 } from "@/data/mock/documents";
-
-const stateLabel: Record<DocumentsUiState, string> = {
-  default: "evidência completa simulada",
-  loading: "carregando",
-  empty: "sem evidência",
-  error: "erro",
-  forbidden: "sem permissão",
-};
 
 export default async function DocumentEvidencePage({ params }: { params: Promise<{ documentId: string }> }) {
   const { documentId } = await params;
   const document = documentCenterItems.find((item) => item.id === documentId);
 
-  if (!document) {
-    notFound();
-  }
+  if (!document) notFound();
 
   const pageState = evidenceDossierStateByDocumentId[documentId] ?? "empty";
-  const events = evidenceEventsByDocumentId[documentId] ?? [];
-  const timeline = timelineByDocumentId[documentId] ?? [];
-  const providerEvents = providerEventsByDocumentId[documentId] ?? [];
-  const signers = signersByDocumentId[documentId] ?? [];
   const evidencePackage = evidencePackageByDocumentId[documentId];
+  const signers = signersByDocumentId[documentId] ?? [];
+  const timeline = timelineByDocumentId[documentId] ?? [];
+  const trail = trailEventsByDocumentId[documentId] ?? [];
+
+  const statusTone = {
+    ausente: "warning",
+    parcial: "warning",
+    completa: "success",
+    pendente_verificacao: "primary",
+  } as const;
 
   return (
     <DashboardShell active="Dashboard">
-      <h1 className="text-2xl font-semibold text-slate-950">Dossiê de Evidência</h1>
-      <p className="mt-1 text-sm text-muted-foreground">Pacote JSON de evidência com trilha de auditoria, hash e eventos simulados.</p>
-
-      <div className="mt-4 flex items-center gap-2">
-        <span className="text-sm text-muted-foreground">Estado:</span>
-        <Badge tone={pageState === "default" ? "success" : pageState === "error" || pageState === "forbidden" ? "danger" : "warning"}>{stateLabel[pageState]}</Badge>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold text-slate-950">Dossiê de Evidência</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Documento: {document.title}</p>
+          <p className="text-sm text-muted-foreground">Paciente: {document.patientName}</p>
+        </div>
+        <Badge tone={statusTone[evidencePackage?.dossierStatus ?? "ausente"]}>{evidencePackage?.dossierStatusLabel ?? "Ausente"}</Badge>
       </div>
 
-      {pageState === "loading" ? <p className="mt-6 text-sm text-muted-foreground">Gerando pacote de evidência...</p> : null}
-      {pageState === "empty" ? <p className="mt-6 text-sm text-muted-foreground">Este documento ainda está sem evidência consolidada.</p> : null}
-      {pageState === "error" ? <p className="mt-6 text-sm text-danger">Falha ao consolidar o pacote de evidência simulado.</p> : null}
-      {pageState === "forbidden" ? <p className="mt-6 text-sm text-danger">Sem permissão para visualizar trilha de auditoria deste documento.</p> : null}
+      <div className="mt-6">
+        {pageState === "loading" ? <LoadingState title="Carregando dossiê" description="Consolidando hashes, eventos e trilha de auditoria simulada." /> : null}
+        {pageState === "empty" ? <EmptyState title="Pacote de evidência ausente" description="Este documento ainda não possui pacote JSON de evidência consolidado." /> : null}
+        {pageState === "error" ? <ErrorState title="Falha ao montar dossiê" description="Não foi possível consolidar o pacote de evidência simulado." /> : null}
+        {pageState === "forbidden" ? <ForbiddenState title="Acesso restrito ao dossiê" description="Seu perfil não possui acesso ao conteúdo de trilha de auditoria deste documento." /> : null}
+      </div>
 
-      {evidencePackage && pageState !== "forbidden" ? (
+      {pageState === "default" && evidencePackage ? (
         <div className="mt-6 space-y-4">
           <div className="grid gap-4 lg:grid-cols-3">
-            <Card><CardHeader><CardTitle>Status da evidência</CardTitle></CardHeader><CardContent className="text-sm">{evidencePackage.statusLabel}</CardContent></Card>
             <Card><CardHeader><CardTitle>Hash do artefato</CardTitle></CardHeader><CardContent className="font-mono text-xs">{evidencePackage.integrity.artifactSha256}</CardContent></Card>
-            <Card><CardHeader><CardTitle>Hash do pacote</CardTitle></CardHeader><CardContent className="font-mono text-xs">{evidencePackage.integrity.packageSha256}</CardContent></Card>
-            <Card><CardHeader><CardTitle>Provedor</CardTitle></CardHeader><CardContent className="text-sm">D4Sign (planejado)</CardContent></Card>
-            <Card><CardHeader><CardTitle>Modo</CardTitle></CardHeader><CardContent className="text-sm">{evidencePackage.providerMode}</CardContent></Card>
-            <Card><CardHeader><CardTitle>External Document ID</CardTitle></CardHeader><CardContent className="font-mono text-xs">{evidencePackage.externalDocumentId}</CardContent></Card>
-          </div>
-
-          <div className="grid gap-4 lg:grid-cols-2">
-            <Card>
-              <CardHeader><CardTitle>Signatários</CardTitle></CardHeader>
-              <CardContent className="space-y-2 text-sm">
-                {signers.length === 0 ? <p className="text-muted-foreground">Sem signatários vinculados.</p> : signers.map((signer) => (
-                  <div key={signer.email} className="rounded-2xl border border-border p-3">
-                    <p className="font-medium text-slate-900">{signer.name}</p>
-                    <p className="text-xs text-muted-foreground">{signer.role} • {signer.email}</p>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader><CardTitle>Eventos do provedor</CardTitle></CardHeader>
-              <CardContent className="space-y-2 text-sm">
-                {providerEvents.length === 0 ? <p className="text-muted-foreground">Sem eventos do provedor para este estado.</p> : providerEvents.map((event) => (
-                  <div key={event.id} className="rounded-2xl border border-border p-3">
-                    <p className="font-medium text-slate-900">{event.action}</p>
-                    <p className="text-xs text-muted-foreground">{event.occurredAt} • {event.source}</p>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+            <Card><CardHeader><CardTitle>Hash do pacote de evidência</CardTitle></CardHeader><CardContent className="font-mono text-xs">{evidencePackage.integrity.packageSha256}</CardContent></Card>
+            <Card><CardHeader><CardTitle>Provedor</CardTitle></CardHeader><CardContent className="text-sm">D4Sign</CardContent></Card>
+            <Card><CardHeader><CardTitle>Modo</CardTitle></CardHeader><CardContent className="text-sm">{evidencePackage.modeLabel}</CardContent></Card>
+            <Card><CardHeader><CardTitle>External document id</CardTitle></CardHeader><CardContent className="font-mono text-xs">{evidencePackage.externalDocumentId}</CardContent></Card>
+            <Card><CardHeader><CardTitle>Status de verificação</CardTitle></CardHeader><CardContent className="text-sm">{evidencePackage.verificationStatusLabel}</CardContent></Card>
+            <Card className="lg:col-span-3"><CardHeader><CardTitle>Método de verificação</CardTitle></CardHeader><CardContent className="text-sm">{evidencePackage.verificationMethod}</CardContent></Card>
           </div>
 
           <Card>
-            <CardHeader><CardTitle>Auditoria recente</CardTitle></CardHeader>
+            <CardHeader><CardTitle>Signatários</CardTitle></CardHeader>
             <CardContent className="space-y-2 text-sm">
-              {events.map((event) => (
-                <div key={event.id} className="rounded-2xl border border-border p-3">
-                  <p className="font-medium text-slate-900">{event.action}</p>
-                  <p className="text-xs text-muted-foreground">{event.occurredAt} • {event.actor} • canal {event.channel}</p>
-                  <p className="font-mono text-xs text-slate-600">hash: {event.signatureHash}</p>
+              {signers.map((signer) => (
+                <div key={signer.email} className="rounded-2xl border border-border p-3">
+                  <p className="font-medium text-slate-900">{signer.name}</p>
+                  <p className="text-xs text-muted-foreground">{signer.role} • {signer.statusLabel} • {signer.timestamp}</p>
+                  <p className="text-xs text-muted-foreground">Método: {signer.method}</p>
                 </div>
               ))}
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader><CardTitle>Timeline do dossiê</CardTitle></CardHeader>
-            <CardContent className="space-y-3 text-sm">
+            <CardHeader><CardTitle>Timeline</CardTitle></CardHeader>
+            <CardContent className="space-y-2 text-sm">
               {timeline.map((step) => (
                 <div key={step.step} className="rounded-2xl border border-border p-3">
                   <p className="font-medium text-slate-900">{step.step}</p>
@@ -113,9 +91,25 @@ export default async function DocumentEvidencePage({ params }: { params: Promise
             </CardContent>
           </Card>
 
-          <p className="rounded-2xl bg-slate-100 p-3 text-xs text-slate-700">
-            Pacote de evidência em modo UI-only: dados simulados, sem verificação real de assinatura e sem exposição de storageObjectPath.
-          </p>
+          <Card>
+            <CardHeader><CardTitle>Trilha de auditoria recente</CardTitle></CardHeader>
+            <CardContent className="space-y-2 text-sm">
+              {trail.map((event) => (
+                <div key={event.id} className="rounded-2xl border border-border p-3">
+                  <p className="font-medium text-slate-900">{event.action.replace("_", " ")}</p>
+                  <p className="text-xs text-muted-foreground">{event.actor} • {event.occurredAt}</p>
+                  <p className="text-xs text-muted-foreground">correlation id: <span className="font-mono">{event.correlationId}</span></p>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline">Baixar pacote JSON de evidência</Button>
+            <Button variant="outline">Copiar hash</Button>
+            <Link href={`/documents/${document.id}`}><Button variant="secondary">Ver documento</Button></Link>
+            <Link href="/documents"><Button variant="ghost">Voltar ao detalhe</Button></Link>
+          </div>
         </div>
       ) : null}
     </DashboardShell>

@@ -17,13 +17,12 @@ export type DocumentCenterItem = {
   providerMode: D4SignMode;
 };
 
-export type DocumentEvidenceEvent = {
+export type DocumentEvidenceTrailEvent = {
   id: string;
   occurredAt: string;
   actor: string;
-  action: string;
-  channel: "web" | "api" | "worker";
-  signatureHash: string;
+  action: "open" | "download" | "evidence_access";
+  correlationId: string;
 };
 
 export type DocumentEvidencePackage = {
@@ -31,8 +30,12 @@ export type DocumentEvidencePackage = {
   generatedAt: string;
   provider: "d4sign";
   providerMode: D4SignMode;
-  statusLabel: "sem evidência" | "evidência parcial" | "evidência completa simulada";
+  modeLabel: "Simulado" | "Não configurado" | "Real bloqueado";
+  dossierStatus: "ausente" | "parcial" | "completa" | "pendente_verificacao";
+  dossierStatusLabel: "Ausente" | "Parcial" | "Completa" | "Pendente de verificação";
   externalDocumentId: string;
+  verificationStatusLabel: "Não verificado (simulado)" | "Pendente";
+  verificationMethod: string;
   integrity: {
     artifactSha256: string;
     packageSha256: string;
@@ -41,7 +44,7 @@ export type DocumentEvidencePackage = {
 };
 
 export type EvidenceTimelineStep = {
-  step: "Documento gerado" | "Assinatura solicitada" | "Webhook recebido" | "Dossiê consolidado" | "Pacote gerado";
+  step: "Documento gerado" | "Artefato criado" | "Assinatura solicitada" | "Webhook simulado recebido" | "Pacote de evidência gerado" | "Acesso/download auditado";
   occurredAt: string;
   status: "concluído" | "pendente";
 };
@@ -50,13 +53,9 @@ export type EvidenceSigner = {
   name: string;
   email: string;
   role: "Profissional" | "Paciente" | "Testemunha";
-};
-
-export type ProviderEvent = {
-  id: string;
-  occurredAt: string;
-  action: string;
-  source: "D4Sign simulado" | "Webhook simulado";
+  statusLabel: "Pendente" | "Assinado";
+  timestamp: string;
+  method: string;
 };
 
 export type DocumentOperationalHealth = {
@@ -112,31 +111,28 @@ export const evidenceDossierStateByDocumentId: Record<string, DocumentsUiState> 
   "doc-restrito": "forbidden",
 };
 
-export const evidenceEventsByDocumentId: Record<string, DocumentEvidenceEvent[]> = {
+export const trailEventsByDocumentId: Record<string, DocumentEvidenceTrailEvent[]> = {
   "doc-ana-consentimento-2026": [
     {
       id: "ev-01",
       occurredAt: "2026-04-27 13:22",
       actor: "Nutricionista Juliana Freitas",
-      action: "Documento gerado no centro documental",
-      channel: "web",
-      signatureHash: "6f9f88e1a4bf19d8c0e7314ab17",
+      action: "open",
+      correlationId: "corr-evd-7ab21f",
     },
     {
       id: "ev-02",
       occurredAt: "2026-04-27 13:24",
-      actor: "Serviço de assinatura (simulado)",
-      action: "Assinatura solicitada para signatários",
-      channel: "worker",
-      signatureHash: "8adf130ab77be21cd90920eff44",
+      actor: "Paciente Ana Paula Lima",
+      action: "download",
+      correlationId: "corr-evd-a901ce",
     },
     {
       id: "ev-03",
       occurredAt: "2026-04-27 13:29",
-      actor: "Webhook simulado",
-      action: "Dossiê consolidado com trilha de auditoria",
-      channel: "api",
-      signatureHash: "31bd09aa9200beef4456aacd222",
+      actor: "Auditoria interna",
+      action: "evidence_access",
+      correlationId: "corr-evd-ffe130",
     },
   ],
 };
@@ -147,8 +143,12 @@ export const evidencePackageByDocumentId: Record<string, DocumentEvidencePackage
     generatedAt: "2026-04-27 13:30",
     provider: "d4sign",
     providerMode: "simulated",
-    statusLabel: "evidência completa simulada",
+    modeLabel: "Simulado",
+    dossierStatus: "completa",
+    dossierStatusLabel: "Completa",
     externalDocumentId: "d4s-doc-sim-009912",
+    verificationStatusLabel: "Não verificado (simulado)",
+    verificationMethod: "Comparação de hash SHA-256 e trilha de eventos simulada (UI-only).",
     integrity: {
       artifactSha256: "8f96d082fa5a20e956f4a67f0a992d094fb6f870f59cda71a8197b7265a99c1a",
       packageSha256: "a3fb42d6f6ed6f5f1c1b35df9870fbe1a9fa0107ee1d51e6ad3a8fd8b20afe45",
@@ -181,32 +181,27 @@ export const d4signConfigMock = {
 
 export const signersByDocumentId: Record<string, EvidenceSigner[]> = {
   "doc-ana-consentimento-2026": [
-    { name: "Juliana Freitas", email: "juliana@clinic.local", role: "Profissional" },
-    { name: "Ana Paula Lima", email: "ana.paciente@demo.local", role: "Paciente" },
+    { name: "Juliana Freitas", email: "juliana@clinic.local", role: "Profissional", statusLabel: "Assinado", timestamp: "2026-04-27 13:28", method: "Assinatura eletrônica simulada" },
+    { name: "Ana Paula Lima", email: "ana.paciente@demo.local", role: "Paciente", statusLabel: "Pendente", timestamp: "2026-04-27 13:29", method: "Link seguro simulado" },
   ],
 };
 
-export const providerEventsByDocumentId: Record<string, ProviderEvent[]> = {
-  "doc-ana-consentimento-2026": [
-    { id: "pv-01", occurredAt: "2026-04-27 13:24", action: "Envelope criado", source: "D4Sign simulado" },
-    { id: "pv-02", occurredAt: "2026-04-27 13:28", action: "Assinatura concluída", source: "D4Sign simulado" },
-    { id: "pv-03", occurredAt: "2026-04-27 13:29", action: "Webhook recebido", source: "Webhook simulado" },
-  ],
-};
 
 export const timelineByDocumentId: Record<string, EvidenceTimelineStep[]> = {
   "doc-ana-consentimento-2026": [
     { step: "Documento gerado", occurredAt: "2026-04-27 13:22", status: "concluído" },
+    { step: "Artefato criado", occurredAt: "2026-04-27 13:23", status: "concluído" },
     { step: "Assinatura solicitada", occurredAt: "2026-04-27 13:24", status: "concluído" },
-    { step: "Webhook recebido", occurredAt: "2026-04-27 13:29", status: "concluído" },
-    { step: "Dossiê consolidado", occurredAt: "2026-04-27 13:29", status: "concluído" },
-    { step: "Pacote gerado", occurredAt: "2026-04-27 13:30", status: "concluído" },
+    { step: "Webhook simulado recebido", occurredAt: "2026-04-27 13:29", status: "concluído" },
+    { step: "Pacote de evidência gerado", occurredAt: "2026-04-27 13:30", status: "concluído" },
+    { step: "Acesso/download auditado", occurredAt: "2026-04-27 13:36", status: "concluído" },
   ],
   "doc-marcos-plano-2026": [
     { step: "Documento gerado", occurredAt: "2026-04-19 08:41", status: "concluído" },
+    { step: "Artefato criado", occurredAt: "2026-04-19 08:42", status: "concluído" },
     { step: "Assinatura solicitada", occurredAt: "2026-04-19 08:44", status: "concluído" },
-    { step: "Webhook recebido", occurredAt: "2026-04-19 08:47", status: "pendente" },
-    { step: "Dossiê consolidado", occurredAt: "—", status: "pendente" },
-    { step: "Pacote gerado", occurredAt: "—", status: "pendente" },
+    { step: "Webhook simulado recebido", occurredAt: "2026-04-19 08:47", status: "pendente" },
+    { step: "Pacote de evidência gerado", occurredAt: "—", status: "pendente" },
+    { step: "Acesso/download auditado", occurredAt: "—", status: "pendente" },
   ],
 };
