@@ -37,7 +37,7 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 23 | Modal Refeição | `/app/meals` | sim | modal em página | sim (`patients/nutrition`) | sim (`nutrition`) | parcial | Fluxo de upload/checklist mais completo | M |
 | 24 | Modal Treino | `/app/workouts` | sim | modal em página | sim (`patients`) | parcial | parcial | Estados/validações e variações | M |
 | 25 | Check-in | `/app/checkin` | sim | checkin page | sim (`clinical/patients`) | sim (`clinical/patients`) | parcial | Stepper e sinais clínicos mais ricos | M |
-| 26 | Config Clínica | `/settings/profile` (aprox.) | parcial | `SettingsShell` | parcial | parcial | não explícito | Tela dedicada de configuração clínica | A |
+| 26 | Config Clínica | `/settings/profile` | completa | `SettingsShell` + cards de configuração clínica | sim (`settings.mock`) | sim (`settings`) | sim | Config clínica harmonizada com dados públicos/fiscais/branding/timezone/preview | A |
 | 27 | Editor Documento | `/settings/documents/editor` | sim | editor page (toolbox/canvas/propriedades) | sim (estado UI-only local) | sim (`documents`) | sim | Expandir interações drag/drop no canvas | A |
 | 28 | D4Sign Settings | `/settings/signature` | sim | d4sign settings page (cards/checklist/banner) | sim (status simulado) | sim (`integrations/documents`) | sim | Conectar adapters futuros sem provider real | A |
 | 29 | Billing SaaS | `/settings/billing` | parcial | billing settings page | sim (`finance`) | sim (`finance`) | parcial | Completar plan/usage/invoice states | M |
@@ -66,15 +66,14 @@ Branch: `docs/real-52-screen-coverage-audit`
 | 52 | Relatório Paciente | `/patients/[patientId]/report` | completa | header + tabs + KPIs + tabelas + alertas | sim (`patient-report`) | sim (`patient-report`) | sim | Concluída com visão financeira, serviços, documentos e adesão | A |
 
 ## Totais
-- ✅ **completas**: 27
-- 🟡 **parciais**: 22
+- ✅ **completas**: 28
+- 🟡 **parciais**: 21
 - 🔴 **faltantes**: 2
 
 ## Top 10 pendências de maior impacto
 1. Implementar **Modal de Pagamento** reutilizável (`#33`).
 3. Completar fluxo clínico central de **SOAP + Anamnese** (`#10/#11`).
 4. Completar **Relatório do Paciente** aderente ao mapa final (`#52`).
-5. Estruturar **Config Clínica** dedicada e harmonizar rotas/settings (`#26`).
 6. Elevar **Chat Mobile** para LEEF explícito (`#20`).
 7. Criar rota/tela de **Pagamento Modal** integrada ao fluxo de venda (`#33`).
 8. Expandir drag/drop e blocos avançados do **Editor de Documento** (`#27`).
